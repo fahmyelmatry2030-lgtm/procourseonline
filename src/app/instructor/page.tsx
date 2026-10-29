@@ -78,7 +78,12 @@ export default async function InstructorDashboard() {
         <div className="saas-card" style={{ padding: '2rem' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
             <h2 style={{ fontSize: '1.25rem' }}>دوراتي الحالية</h2>
-            <Link href="/instructor/courses" style={{ color: 'var(--primary)', fontWeight: '600', textDecoration: 'none', fontSize: '0.9rem' }}>إدارة الكل</Link>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <Link href="/instructor/courses" style={{ color: 'var(--primary)', fontWeight: '600', textDecoration: 'none', fontSize: '0.9rem' }}>إدارة الكل</Link>
+              <Link href="/instructor/courses/new" className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.5rem 1rem', fontSize: '0.9rem' }}>
+                <Plus size={16} /> دورة جديدة
+              </Link>
+            </div>
           </div>
           
           {myCourses.length === 0 ? (
@@ -105,11 +110,13 @@ export default async function InstructorDashboard() {
                   {myCourses.slice(0, 5).map(course => (
                     <tr key={course.id} style={{ borderBottom: '1px solid var(--border)', transition: 'background 0.2s', cursor: 'pointer' }} className="hover:bg-muted/50">
                       <td style={{ padding: '1rem', fontWeight: '600', color: 'var(--foreground)' }}>{course.title}</td>
-                      <td style={{ padding: '1rem' }}><span className="badge badge-accent">مفعل</span></td>
+                      <td style={{ padding: '1rem' }}><span className="badge badge-accent">{course.status}</span></td>
                       <td style={{ padding: '1rem' }}>{course.enrollments.length}</td>
                       <td style={{ padding: '1rem' }}>${course.price.toFixed(2)}</td>
                       <td style={{ padding: '1rem', textAlign: 'center' }}>
-                        <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--muted-foreground)' }}><MoreVertical size={18} /></button>
+                        <Link href={`/courses/${course.id}`} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--muted-foreground)', textDecoration: 'none', fontSize: '0.85rem' }}>
+                          <MoreVertical size={18} />
+                        </Link>
                       </td>
                     </tr>
                   ))}
