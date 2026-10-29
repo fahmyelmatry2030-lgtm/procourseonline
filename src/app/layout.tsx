@@ -1,12 +1,13 @@
 import './index.css';
+import Image from 'next/image';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Navigation } from '@/components/Navigation';
 import { MobileNav } from '@/components/MobileNav';
 
 export const metadata: Metadata = {
-  title: 'المنصة | رحلتك نحو التعلم',
-  description: 'منصة تعليمية بتصميم دافئ ومريح',
+  title: 'ProCourse Online | رحلتك نحو التعلم',
+  description: 'منصة ProCourse Online للتعليم المباشر والتفاعلي',
 };
 
 export default function RootLayout({
@@ -25,20 +26,15 @@ export default function RootLayout({
               
               {/* Logo (Right) */}
               <div className="flex-shrink-0">
-                <Link href="/" className="flex items-center gap-2 text-slate-800 font-bold text-2xl">
-                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="40" height="40" rx="10" fill="url(#paint0_linear_logo)"/>
-                    <path d="M20 10L8 16L20 22L32 16L20 10Z" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M8 24L20 30L32 24" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M8 16L20 22L32 16" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    <defs>
-                      <linearGradient id="paint0_linear_logo" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
-                        <stop stopColor="#8B5CF6"/>
-                        <stop offset="1" stopColor="#3B82F6"/>
-                      </linearGradient>
-                    </defs>
-                  </svg>
-                  المنصة
+                <Link href="/">
+                  <Image
+                    src="/logo.jpg"
+                    alt="ProCourse Online"
+                    width={200}
+                    height={60}
+                    className="h-14 w-auto object-contain"
+                    priority
+                  />
                 </Link>
               </div>
 
@@ -71,19 +67,13 @@ export default function RootLayout({
               {/* Logo & About */}
               <div>
                 <Link href="/" className="flex items-center gap-2 text-slate-800 font-bold text-2xl mb-6">
-                  <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="40" height="40" rx="10" fill="url(#paint0_linear_logo_footer)"/>
-                    <path d="M20 10L8 16L20 22L32 16L20 10Z" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M8 24L20 30L32 24" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M8 16L20 22L32 16" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    <defs>
-                      <linearGradient id="paint0_linear_logo_footer" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
-                        <stop stopColor="#8B5CF6"/>
-                        <stop offset="1" stopColor="#3B82F6"/>
-                      </linearGradient>
-                    </defs>
-                  </svg>
-                  المنصة
+                  <Image
+                    src="/logo.jpg"
+                    alt="ProCourse Online"
+                    width={180}
+                    height={54}
+                    className="h-12 w-auto object-contain mb-2"
+                  />
                 </Link>
                 <p className="text-slate-500 font-medium leading-relaxed mb-6">
                   منصتك الموثوقة للتعليم المباشر والتفاعلي مع نخبة من الخبراء المعتمدين في مختلف المجالات.
