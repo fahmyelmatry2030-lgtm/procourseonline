@@ -34,22 +34,22 @@ export default function VerifyCertificate() {
   };
 
   return (
-    <div className="bg-[#FFFDF8] min-h-[calc(100vh-80px)] py-16 relative flex items-center justify-center">
+    <div className="bg-[#F8FAFF] min-h-[calc(100vh-80px)] py-16 relative flex items-center justify-center">
       <div className="hero-glow opacity-50 hidden md:block"></div>
       
       <div className="max-w-2xl w-full mx-auto px-4 relative z-10">
         
         <div className="friendly-card p-8 md:p-12 border border-slate-100 text-center relative overflow-hidden">
           {/* Decorative background element */}
-          <div className="absolute -top-24 -right-24 w-48 h-48 bg-purple-50 rounded-full blur-3xl opacity-60"></div>
+          <div className="absolute -top-24 -right-24 w-48 h-48 bg-sky-50 rounded-full blur-3xl opacity-60"></div>
           <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-teal-50 rounded-full blur-3xl opacity-60"></div>
 
           <div className="relative z-10">
-            <div className="w-20 h-20 bg-purple-50 text-[#8B5CF6] rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm border border-purple-100">
+            <div className="w-20 h-20 bg-sky-50 text-[#0EA5E9] rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm border border-sky-100">
               <ShieldCheck size={40} />
             </div>
             
-            <h1 className="text-3xl md:text-4xl font-black text-slate-800 mb-4">التحقق من <span className="text-[#8B5CF6]">الشهادات</span></h1>
+            <h1 className="text-3xl md:text-4xl font-black text-slate-800 mb-4">التحقق من <span className="text-[#0EA5E9]">الشهادات</span></h1>
             
             <p className="text-slate-500 mb-10 leading-relaxed max-w-lg mx-auto font-medium">
               نظامنا مدعوم بتشفير متقدم لمنع التزوير. أدخل كود التحقق الموجود على الشهادة للتأكد من صحتها وموثوقيتها.
@@ -61,7 +61,7 @@ export default function VerifyCertificate() {
                 <input 
                   type="text" 
                   placeholder="أدخل كود الشهادة (مثال: cert-1234-abcd)" 
-                  className="w-full rounded-full border border-slate-200 bg-slate-50 px-6 py-4 text-center md:text-right font-medium text-slate-700 focus:border-[#8B5CF6] focus:bg-white focus:outline-none focus:ring-2 focus:ring-purple-100 transition-all text-lg" 
+                  className="w-full rounded-full border border-slate-200 bg-slate-50 px-6 py-4 text-center md:text-right font-medium text-slate-700 focus:border-[#0EA5E9] focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-100 transition-all text-lg" 
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
                   dir="ltr"
@@ -96,7 +96,7 @@ export default function VerifyCertificate() {
                   </div>
                   <div className="flex justify-between items-center border-b border-slate-50 pb-3">
                     <span className="text-slate-400 font-bold text-sm">اسم الدورة</span>
-                    <span className="text-[#8B5CF6] font-black">{certData.courseName}</span>
+                    <span className="text-[#0EA5E9] font-black">{certData.courseName}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-slate-400 font-bold text-sm">تاريخ الإصدار</span>
@@ -123,3 +123,4 @@ export default function VerifyCertificate() {
     </div>
   );
 }
+

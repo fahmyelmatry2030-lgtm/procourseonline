@@ -2,20 +2,20 @@ import { Mail, Phone, MapPin, Send, MessageSquare } from 'lucide-react';
 
 export default function ContactPage() {
   return (
-    <div className="bg-[#FFFDF8] min-h-screen py-16 relative overflow-hidden">
+    <div className="bg-[#F8FAFF] min-h-screen py-16 relative overflow-hidden">
       {/* Decorative background blur */}
       <div className="hero-glow opacity-50 hidden md:block"></div>
-      <div className="absolute top-40 right-0 w-96 h-96 bg-purple-100 rounded-full blur-[100px] opacity-40 -z-10"></div>
+      <div className="absolute top-40 right-0 w-96 h-96 bg-sky-100 rounded-full blur-[100px] opacity-40 -z-10"></div>
       <div className="absolute bottom-20 left-10 w-80 h-80 bg-teal-100 rounded-full blur-[80px] opacity-40 -z-10"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="w-16 h-16 bg-purple-50 text-[#8B5CF6] rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm border border-purple-100">
+          <div className="w-16 h-16 bg-sky-50 text-[#0EA5E9] rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm border border-sky-100">
             <MessageSquare size={32} />
           </div>
-          <h1 className="text-4xl md:text-5xl font-black text-slate-800 mb-4">تواصل <span className="text-[#8B5CF6]">معنا</span></h1>
+          <h1 className="text-4xl md:text-5xl font-black text-slate-800 mb-4">تواصل <span className="text-[#0EA5E9]">معنا</span></h1>
           <p className="text-lg text-slate-500 font-medium max-w-2xl mx-auto leading-relaxed">
             نحن هنا لمساعدتك. سواء كان لديك استفسار عن دورة، أو تواجه مشكلة تقنية، أو ترغب في الانضمام كمحاضر، لا تتردد في مراسلتنا.
           </p>
@@ -27,13 +27,13 @@ export default function ContactPage() {
           <div className="lg:col-span-2 flex flex-col gap-6">
             
             <div className="friendly-card p-8 border border-slate-100 flex items-start gap-4 group hover:border-purple-200 transition-colors">
-              <div className="w-12 h-12 rounded-full bg-purple-50 text-[#8B5CF6] flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+              <div className="w-12 h-12 rounded-full bg-sky-50 text-[#0EA5E9] flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                 <Mail size={24} />
               </div>
               <div>
                 <h3 className="text-lg font-bold text-slate-800 mb-1">البريد الإلكتروني</h3>
                 <p className="text-slate-500 font-medium mb-2">للاستفسارات العامة والدعم التقني</p>
-                <a href="mailto:info@almanassa.com" className="text-[#8B5CF6] font-bold text-lg hover:underline" dir="ltr">info@almanassa.com</a>
+                <a href="mailto:info@almanassa.com" className="text-[#0EA5E9] font-bold text-lg hover:underline" dir="ltr">info@almanassa.com</a>
               </div>
             </div>
 
@@ -68,7 +68,7 @@ export default function ContactPage() {
           <div className="lg:col-span-3">
             <div className="friendly-card p-8 md:p-10 border border-slate-100 relative overflow-hidden">
               {/* Decoration inside card */}
-              <div className="absolute top-0 right-0 w-32 h-32 bg-purple-50 rounded-bl-full opacity-50"></div>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-sky-50 rounded-bl-full opacity-50"></div>
               
               <h2 className="text-2xl font-black text-slate-800 mb-8 relative z-10">أرسل لنا رسالة</h2>
               
@@ -79,7 +79,7 @@ export default function ContactPage() {
                     <input 
                       type="text" 
                       placeholder="أحمد محمد"
-                      className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-medium text-slate-700 focus:border-[#8B5CF6] focus:bg-white focus:outline-none focus:ring-2 focus:ring-purple-100 transition-all"
+                      className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-medium text-slate-700 focus:border-[#0EA5E9] focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-100 transition-all"
                     />
                   </div>
                   <div>
@@ -87,7 +87,7 @@ export default function ContactPage() {
                     <input 
                       type="email" 
                       placeholder="ahmed@example.com"
-                      className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-medium text-slate-700 focus:border-[#8B5CF6] focus:bg-white focus:outline-none focus:ring-2 focus:ring-purple-100 transition-all"
+                      className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-medium text-slate-700 focus:border-[#0EA5E9] focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-100 transition-all"
                       dir="ltr"
                     />
                   </div>
@@ -95,7 +95,7 @@ export default function ContactPage() {
 
                 <div>
                   <label className="block text-sm font-bold text-slate-700 mb-2">نوع الاستفسار</label>
-                  <select className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-bold text-slate-700 focus:border-[#8B5CF6] focus:bg-white focus:outline-none focus:ring-2 focus:ring-purple-100 transition-all">
+                  <select className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-bold text-slate-700 focus:border-[#0EA5E9] focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-100 transition-all">
                     <option>استفسار عام</option>
                     <option>مشكلة تقنية</option>
                     <option>الانضمام كمحاضر</option>
@@ -108,7 +108,7 @@ export default function ContactPage() {
                   <textarea 
                     rows={5}
                     placeholder="اكتب رسالتك هنا بوضوح وسنقوم بالرد عليك في أقرب وقت..."
-                    className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-medium text-slate-700 focus:border-[#8B5CF6] focus:bg-white focus:outline-none focus:ring-2 focus:ring-purple-100 transition-all resize-none"
+                    className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-medium text-slate-700 focus:border-[#0EA5E9] focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-100 transition-all resize-none"
                   ></textarea>
                 </div>
 
@@ -124,3 +124,4 @@ export default function ContactPage() {
     </div>
   );
 }
+

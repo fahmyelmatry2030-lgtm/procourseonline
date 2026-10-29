@@ -7,7 +7,7 @@ import {
 
 export default function Home() {
   return (
-    <div className="bg-[#FFFDF8]">
+    <div className="bg-[#F8FAFF]">
       
       {/* 2. Hero Section */}
       <section className="relative pt-24 pb-32 overflow-hidden border-b border-orange-50/50">
@@ -22,7 +22,7 @@ export default function Home() {
               </div>
               
               <h1 className="text-[3rem] md:text-[4rem] font-black text-slate-800 leading-[1.2] mb-6">
-                ابدأ رحلتك التعليمية مع نخبة من <span className="text-[#8B5CF6]">المحاضرين المحترفين</span>
+                ابدأ رحلتك التعليمية مع نخبة من <span className="text-[#0EA5E9]">المحاضرين المحترفين</span>
               </h1>
               
               <p className="text-lg md:text-xl text-slate-500 font-medium mb-10 leading-relaxed max-w-2xl mx-auto lg:mx-0">
@@ -42,11 +42,11 @@ export default function Home() {
             {/* Illustration */}
             <div className="lg:w-1/2 relative">
               <div className="relative w-full aspect-square max-w-lg mx-auto">
-                <div className="absolute inset-0 bg-gradient-to-tr from-purple-100 to-emerald-50 rounded-full blur-3xl opacity-50"></div>
+                <div className="absolute inset-0 bg-gradient-to-tr from-sky-100 to-emerald-50 rounded-full blur-3xl opacity-50"></div>
                 {/* Placeholder for modern illustration */}
                 <div className="relative friendly-card h-full w-full flex items-center justify-center bg-white border border-slate-100 p-8">
                   <div className="text-center">
-                    <MonitorPlay size={80} className="text-[#8B5CF6] mx-auto mb-4 opacity-50" />
+                    <MonitorPlay size={80} className="text-[#0EA5E9] mx-auto mb-4 opacity-50" />
                     <p className="text-slate-400 font-bold">صورة أو Illustration حديثة تمثل التعليم والتقنية</p>
                   </div>
                 </div>
@@ -71,8 +71,8 @@ export default function Home() {
             </div>
 
             <div className="friendly-card p-6 flex flex-col items-center justify-center text-center">
-              <div className="w-12 h-12 rounded-full bg-purple-50 flex items-center justify-center mb-4">
-                <Users size={24} className="text-[#8B5CF6]" />
+              <div className="w-12 h-12 rounded-full bg-sky-50 flex items-center justify-center mb-4">
+                <Users size={24} className="text-[#0EA5E9]" />
               </div>
               <div className="text-3xl font-black text-slate-800 mb-1">+120</div>
               <div className="text-sm font-bold text-slate-500">محاضر</div>
@@ -121,7 +121,7 @@ export default function Home() {
               { icon: '🤖', title: 'الذكاء الاصطناعي' },
               { icon: '📊', title: 'تحليل البيانات' }
             ].map((cat, i) => (
-              <Link key={i} href="#" className="friendly-card p-6 text-center hover:border-[#8B5CF6]/30 border border-transparent flex flex-col items-center justify-center aspect-square">
+              <Link key={i} href="#" className="friendly-card p-6 text-center hover:border-[#0EA5E9]/30 border border-transparent flex flex-col items-center justify-center aspect-square">
                 <div className="text-4xl mb-4">{cat.icon}</div>
                 <h3 className="font-bold text-slate-700">{cat.title}</h3>
               </Link>
@@ -208,7 +208,7 @@ export default function Home() {
               { icon: <FileText />, title: 'اختبارات وشهادات', desc: 'تقييم مستمر لضمان فهمك واستيعابك للمادة العلمية.' }
             ].map((feature, i) => (
               <div key={i} className="friendly-card p-8 flex gap-6">
-                <div className="w-14 h-14 shrink-0 rounded-2xl bg-purple-50 text-[#8B5CF6] flex items-center justify-center">
+                <div className="w-14 h-14 shrink-0 rounded-2xl bg-sky-50 text-[#0EA5E9] flex items-center justify-center">
                   {feature.icon}
                 </div>
                 <div>
@@ -243,7 +243,7 @@ export default function Home() {
               { step: '4', title: 'ابدأ التعلم واحصل على شهادتك', icon: <Award /> }
             ].map((step, i) => (
               <div key={i} className="relative z-10 friendly-card w-full md:w-64 p-8 flex flex-col items-center text-center">
-                <div className="w-16 h-16 rounded-full bg-[#8B5CF6] text-white flex items-center justify-center text-2xl font-black mb-4 shadow-lg shadow-purple-500/20">
+                <div className="w-16 h-16 rounded-full bg-[#0EA5E9] text-white flex items-center justify-center text-2xl font-black mb-4 shadow-lg shadow-sky-500/20">
                   {step.step}
                 </div>
                 <div className="text-slate-400 mb-4">{step.icon}</div>
@@ -271,7 +271,7 @@ export default function Home() {
                   {/* Placeholder for Image */}
                 </div>
                 <h3 className="text-xl font-bold text-slate-800 mb-1">د. مهندس خالد السعيد</h3>
-                <p className="text-[#8B5CF6] font-bold text-sm mb-4">خبير الأمن السيبراني</p>
+                <p className="text-[#0EA5E9] font-bold text-sm mb-4">خبير الأمن السيبراني</p>
                 
                 <div className="flex gap-4 text-sm font-medium text-slate-500 mb-6">
                   <div className="flex flex-col items-center">
@@ -296,7 +296,7 @@ export default function Home() {
       </section>
 
       {/* 9. آراء الطلاب (Student Reviews) */}
-      <section className="py-24 bg-purple-50/50">
+      <section className="py-24 bg-sky-50/50">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center mb-16">
@@ -365,17 +365,17 @@ export default function Home() {
       </section>
 
       {/* 11. Call To Action */}
-      <section className="py-24 bg-[#8B5CF6] relative overflow-hidden">
+      <section className="py-24 bg-[#0EA5E9] relative overflow-hidden">
         {/* Decorative elements */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-emerald-400/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
         
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
           <h2 className="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">جاهز لتطوير مهاراتك؟</h2>
-          <p className="text-xl text-purple-100 font-medium mb-10 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl text-sky-100 font-medium mb-10 max-w-2xl mx-auto leading-relaxed">
             انضم الآن وابدأ أول دورة مع أفضل المحاضرين المتخصصين. استثمر في نفسك اليوم لغدٍ أفضل.
           </p>
-          <Link href="/courses" className="btn bg-white text-[#8B5CF6] hover:bg-slate-50 hover:shadow-xl hover:shadow-black/10 px-10 py-4 text-lg">
+          <Link href="/courses" className="btn bg-white text-[#0EA5E9] hover:bg-slate-50 hover:shadow-xl hover:shadow-black/10 px-10 py-4 text-lg">
             استعرض الدورات
           </Link>
         </div>
@@ -384,3 +384,4 @@ export default function Home() {
     </div>
   );
 }
+

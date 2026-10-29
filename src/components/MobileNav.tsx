@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -29,15 +29,15 @@ export function MobileNav() {
               key={item.href}
               href={item.href}
               className={`flex flex-col items-center justify-center w-16 gap-1 transition-colors ${
-                isActive ? 'text-[#8B5CF6]' : 'text-slate-400 hover:text-slate-600'
+                isActive ? 'text-[#0EA5E9]' : 'text-slate-400 hover:text-slate-600'
               }`}
             >
               <div className={`flex items-center justify-center w-10 h-10 rounded-full transition-all ${
-                isActive ? 'bg-purple-50' : 'bg-transparent'
+                isActive ? 'bg-sky-50' : 'bg-transparent'
               }`}>
-                <Icon size={22} className={isActive ? 'fill-purple-100' : ''} />
+                <Icon size={22} className={isActive ? 'fill-sky-100' : ''} />
               </div>
-              <span className={`text-[11px] font-bold ${isActive ? 'text-[#8B5CF6]' : 'text-slate-500'}`}>
+              <span className={`text-[11px] font-bold ${isActive ? 'text-[#0EA5E9]' : 'text-slate-500'}`}>
                 {item.name}
               </span>
             </Link>
@@ -47,3 +47,4 @@ export function MobileNav() {
     </div>
   );
 }
+

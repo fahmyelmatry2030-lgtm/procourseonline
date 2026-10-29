@@ -56,17 +56,17 @@ export default async function InstructorProfile({ params }: { params: Promise<{ 
   }
 
   return (
-    <div className="bg-[#FFFDF8] min-h-screen py-16 relative overflow-hidden">
+    <div className="bg-[#F8FAFF] min-h-screen py-16 relative overflow-hidden">
       <div className="hero-glow opacity-50 hidden md:block"></div>
       
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Profile Header */}
         <div className="friendly-card p-8 md:p-12 flex flex-col md:flex-row gap-8 md:gap-12 items-center md:items-start mb-16 border border-slate-100 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-purple-100 to-transparent rounded-bl-full opacity-50"></div>
+          <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-sky-100 to-transparent rounded-bl-full opacity-50"></div>
           
           <div className="w-32 h-32 md:w-40 md:h-40 shrink-0 rounded-full bg-white p-2 relative z-10 shadow-xl">
-            <div className="w-full h-full rounded-full bg-gradient-to-br from-[#8B5CF6] to-[#14B8A6] flex items-center justify-center text-5xl font-black text-white">
+            <div className="w-full h-full rounded-full bg-gradient-to-br from-[#0EA5E9] to-[#14B8A6] flex items-center justify-center text-5xl font-black text-white">
               {(instructor.name || 'M').charAt(0)}
             </div>
           </div>
@@ -96,7 +96,7 @@ export default async function InstructorProfile({ params }: { params: Promise<{ 
               </div>
               <div className="w-px h-12 bg-slate-100 hidden md:block"></div>
               <div className="flex flex-col items-center md:items-start">
-                <div className="flex items-center gap-2 text-2xl font-black text-[#8B5CF6] mb-1">
+                <div className="flex items-center gap-2 text-2xl font-black text-[#0EA5E9] mb-1">
                   <Users size={24} /> {totalStudents}
                 </div>
                 <span className="text-sm font-bold text-slate-400">طالب مسجل</span>
@@ -129,7 +129,7 @@ export default async function InstructorProfile({ params }: { params: Promise<{ 
                 
                 <div className="h-48 bg-slate-100 flex items-center justify-center relative overflow-hidden group">
                   <PlayCircle size={48} className="text-slate-300 group-hover:scale-110 transition-transform duration-300" />
-                  <div className="absolute top-4 right-4 bg-white px-4 py-1.5 rounded-full text-xs font-black text-[#8B5CF6] shadow-md">
+                  <div className="absolute top-4 right-4 bg-white px-4 py-1.5 rounded-full text-xs font-black text-[#0EA5E9] shadow-md">
                     متاح للتسجيل
                   </div>
                 </div>

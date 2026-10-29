@@ -16,7 +16,7 @@ const statusLabels: Record<string, string> = {
 const statusColors: Record<string, string> = {
   OPEN: '#10B981',
   STARTING_SOON: '#F59E0B',
-  IN_PROGRESS: '#8B5CF6',
+  IN_PROGRESS: '#0EA5E9',
   CLOSED: '#EF4444',
   ENDED: '#6B7280',
   CANCELLED: '#EF4444',
@@ -77,14 +77,14 @@ export default async function CoursesPage({
   const statuses = ['OPEN', 'STARTING_SOON', 'IN_PROGRESS', 'ENDED'];
 
   return (
-    <div className="bg-[#FFFDF8] min-h-screen py-16 relative">
+    <div className="bg-[#F8FAFF] min-h-screen py-16 relative">
       <div className="hero-glow opacity-50 hidden md:block"></div>
       
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
         <div className="mb-12 text-center md:text-right">
-          <h1 className="text-4xl md:text-5xl font-black text-slate-800 mb-4">تصفح <span className="text-[#8B5CF6]">جميع الدورات</span></h1>
+          <h1 className="text-4xl md:text-5xl font-black text-slate-800 mb-4">تصفح <span className="text-[#0EA5E9]">جميع الدورات</span></h1>
           <p className="text-lg text-slate-500 font-medium">اختر من بين دورات مباشرة ومسجلة لتطوير مهاراتك.</p>
         </div>
 
@@ -93,7 +93,7 @@ export default async function CoursesPage({
           {/* Sidebar Filters — form with GET */}
           <aside className="w-full lg:w-[320px] shrink-0 friendly-card p-6 sticky top-24 border border-slate-100">
             <div className="flex items-center gap-2 mb-8 text-xl font-black text-slate-800">
-              <Filter size={24} className="text-[#8B5CF6]" /> الفلاتر
+              <Filter size={24} className="text-[#0EA5E9]" /> الفلاتر
             </div>
 
             <form method="GET">
@@ -105,7 +105,7 @@ export default async function CoursesPage({
                     type="text"
                     name="search"
                     defaultValue={search}
-                    className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 focus:border-[#8B5CF6] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#8B5CF6] transition-all"
+                    className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 focus:border-[#0EA5E9] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#0EA5E9] transition-all"
                     placeholder="ابحث عن دورة..."
                   />
                   <Search size={18} className="text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
@@ -117,24 +117,24 @@ export default async function CoursesPage({
                 <h3 className="font-bold text-slate-700 mb-3">حالة الدورة</h3>
                 <div className="flex flex-col gap-3">
                   {statuses.map(s => (
-                    <label key={s} className="flex items-center gap-3 cursor-pointer text-slate-600 font-medium hover:text-[#8B5CF6] transition-colors">
+                    <label key={s} className="flex items-center gap-3 cursor-pointer text-slate-600 font-medium hover:text-[#0EA5E9] transition-colors">
                       <input
                         type="radio"
                         name="status"
                         value={s}
                         defaultChecked={selectedStatus === s}
-                        className="w-4 h-4 text-[#8B5CF6] focus:ring-[#8B5CF6]"
+                        className="w-4 h-4 text-[#0EA5E9] focus:ring-[#0EA5E9]"
                       />
                       {statusLabels[s]}
                     </label>
                   ))}
-                  <label className="flex items-center gap-3 cursor-pointer text-slate-600 font-medium hover:text-[#8B5CF6] transition-colors">
+                  <label className="flex items-center gap-3 cursor-pointer text-slate-600 font-medium hover:text-[#0EA5E9] transition-colors">
                     <input
                       type="radio"
                       name="status"
                       value=""
                       defaultChecked={!selectedStatus}
-                      className="w-4 h-4 text-[#8B5CF6] focus:ring-[#8B5CF6]"
+                      className="w-4 h-4 text-[#0EA5E9] focus:ring-[#0EA5E9]"
                     />
                     الكل
                   </label>
@@ -150,13 +150,13 @@ export default async function CoursesPage({
                     { value: 'free', label: 'مجاني' },
                     { value: 'paid', label: 'مدفوع' },
                   ].map(opt => (
-                    <label key={opt.value} className="flex items-center gap-3 cursor-pointer text-slate-600 font-medium hover:text-[#8B5CF6] transition-colors">
+                    <label key={opt.value} className="flex items-center gap-3 cursor-pointer text-slate-600 font-medium hover:text-[#0EA5E9] transition-colors">
                       <input
                         type="radio"
                         name="price"
                         value={opt.value}
                         defaultChecked={priceFilter === opt.value}
-                        className="w-4 h-4 text-[#8B5CF6] focus:ring-[#8B5CF6]"
+                        className="w-4 h-4 text-[#0EA5E9] focus:ring-[#0EA5E9]"
                       />
                       {opt.label}
                     </label>
@@ -185,7 +185,7 @@ export default async function CoursesPage({
                   name="sort"
                   defaultValue={sortOption}
                   onChange={(e) => (e.target.form as HTMLFormElement).submit()}
-                  className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-bold text-slate-700 focus:outline-none focus:border-[#8B5CF6]"
+                  className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-bold text-slate-700 focus:outline-none focus:border-[#0EA5E9]"
                 >
                   <option value="newest">الأحدث</option>
                   <option value="rating">الأعلى تقييماً</option>
@@ -234,7 +234,7 @@ export default async function CoursesPage({
                         </h3>
                         
                         <div className="flex items-center gap-2 mb-4">
-                          <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center text-[#8B5CF6] font-black text-xs">
+                          <div className="w-8 h-8 bg-sky-100 rounded-full flex items-center justify-center text-[#0EA5E9] font-black text-xs">
                             {(course.instructor.name || 'م').charAt(0)}
                           </div>
                           <span className="text-sm font-bold text-slate-600">
@@ -282,3 +282,4 @@ export default async function CoursesPage({
     </div>
   );
 }
+

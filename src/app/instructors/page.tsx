@@ -26,14 +26,14 @@ export default async function InstructorsPage() {
   instructors = [...instructors, ...mockInstructors] as any;
 
   return (
-    <div className="bg-[#FFFDF8] min-h-screen py-16 relative overflow-hidden">
+    <div className="bg-[#F8FAFF] min-h-screen py-16 relative overflow-hidden">
       <div className="hero-glow opacity-50 hidden md:block"></div>
       
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Page Header */}
         <div className="text-center mb-16 relative">
-          <h1 className="text-4xl md:text-5xl font-black text-slate-800 mb-6">نخبة <span className="text-[#8B5CF6]">المحاضرين والخبراء</span></h1>
+          <h1 className="text-4xl md:text-5xl font-black text-slate-800 mb-6">نخبة <span className="text-[#0EA5E9]">المحاضرين والخبراء</span></h1>
           <p className="text-lg text-slate-500 font-medium max-w-2xl mx-auto leading-relaxed">
             فخورون بضم أفضل الكفاءات والخبراء المعتمدين في مختلف المجالات، لتزويدك بالمعرفة الأكاديمية والعملية بأعلى معايير الجودة.
           </p>
@@ -60,7 +60,7 @@ export default async function InstructorsPage() {
               <div key={inst.id} className="friendly-card flex flex-col border border-slate-100 overflow-hidden group">
                 
                 {/* Header Banner */}
-                <div className="h-32 bg-gradient-to-r from-purple-100 to-teal-50 relative">
+                <div className="h-32 bg-gradient-to-r from-sky-100 to-teal-50 relative">
                   <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
                 </div>
 
@@ -69,7 +69,7 @@ export default async function InstructorsPage() {
                   
                   {/* Avatar */}
                   <div className="w-24 h-24 rounded-full bg-white p-1.5 mx-auto -mt-12 mb-4 relative z-10 shadow-lg">
-                    <div className="w-full h-full rounded-full bg-gradient-to-br from-[#8B5CF6] to-[#14B8A6] flex items-center justify-center text-3xl font-black text-white">
+                    <div className="w-full h-full rounded-full bg-gradient-to-br from-[#0EA5E9] to-[#14B8A6] flex items-center justify-center text-3xl font-black text-white">
                       {(inst.name || 'M').charAt(0)}
                     </div>
                   </div>
@@ -93,7 +93,7 @@ export default async function InstructorsPage() {
                     </div>
                     <div className="w-px h-8 bg-slate-100"></div>
                     <div className="text-center flex-1">
-                      <div className="flex items-center justify-center gap-1 text-[#8B5CF6] font-black text-lg mb-1">
+                      <div className="flex items-center justify-center gap-1 text-[#0EA5E9] font-black text-lg mb-1">
                         <BookOpen size={16} /> {courseCount}
                       </div>
                       <div className="text-xs font-bold text-slate-400">دورة</div>
@@ -107,7 +107,7 @@ export default async function InstructorsPage() {
                     </div>
                   </div>
 
-                  <Link href={`/instructors/${inst.id}`} className="btn btn-outline w-full rounded-full flex items-center justify-center gap-2 group-hover:bg-[#8B5CF6] group-hover:text-white transition-all">
+                  <Link href={`/instructors/${inst.id}`} className="btn btn-outline w-full rounded-full flex items-center justify-center gap-2 group-hover:bg-[#0EA5E9] group-hover:text-white transition-all">
                     عرض الملف الشخصي <ChevronLeft size={16} />
                   </Link>
                 </div>
@@ -120,3 +120,4 @@ export default async function InstructorsPage() {
     </div>
   );
 }
+

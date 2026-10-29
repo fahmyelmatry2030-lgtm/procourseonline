@@ -1,4 +1,4 @@
-import './index.css';
+﻿import './index.css';
 import Image from 'next/image';
 import type { Metadata } from 'next';
 import Link from 'next/link';
@@ -48,10 +48,10 @@ export default function RootLayout({
 
               {/* Actions (Left) */}
               <div className="flex items-center gap-3">
-                <Link href="/login" className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold text-slate-600 hover:text-[#8B5CF6] hover:bg-purple-50 transition-colors">
+                <Link href="/login" className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold text-slate-600 hover:text-[#0EA5E9] hover:bg-sky-50 transition-colors">
                   تسجيل الدخول
                 </Link>
-                <Link href="/register" className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#8B5CF6] text-white text-sm font-bold hover:-translate-y-0.5 hover:shadow-lg hover:shadow-purple-500/20 transition-all duration-200">
+                <Link href="/register" className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#0EA5E9] text-white text-sm font-bold hover:-translate-y-0.5 hover:shadow-lg hover:shadow-sky-500/20 transition-all duration-200">
                   إنشاء حساب
                 </Link>
               </div>
@@ -84,11 +84,11 @@ export default function RootLayout({
                   منصتك الموثوقة للتعليم المباشر والتفاعلي مع نخبة من الخبراء المعتمدين في مختلف المجالات.
                 </p>
                 <div className="flex gap-4">
-                  <a href="#" className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 hover:bg-[#8B5CF6] hover:text-white transition-colors">W</a>
-                  <a href="#" className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 hover:bg-[#8B5CF6] hover:text-white transition-colors">T</a>
-                  <a href="#" className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 hover:bg-[#8B5CF6] hover:text-white transition-colors">F</a>
-                  <a href="#" className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 hover:bg-[#8B5CF6] hover:text-white transition-colors">L</a>
-                  <a href="#" className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 hover:bg-[#8B5CF6] hover:text-white transition-colors">E</a>
+                  <a href="#" className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 hover:bg-[#0EA5E9] hover:text-white transition-colors">W</a>
+                  <a href="#" className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 hover:bg-[#0EA5E9] hover:text-white transition-colors">T</a>
+                  <a href="#" className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 hover:bg-[#0EA5E9] hover:text-white transition-colors">F</a>
+                  <a href="#" className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 hover:bg-[#0EA5E9] hover:text-white transition-colors">L</a>
+                  <a href="#" className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 hover:bg-[#0EA5E9] hover:text-white transition-colors">E</a>
                 </div>
               </div>
 
@@ -96,10 +96,10 @@ export default function RootLayout({
               <div>
                 <h4 className="text-lg font-bold text-slate-800 mb-6">روابط سريعة</h4>
                 <ul className="space-y-4">
-                  <li><Link href="/" className="text-slate-500 hover:text-[#8B5CF6] font-medium transition-colors">الرئيسية</Link></li>
-                  <li><Link href="/courses" className="text-slate-500 hover:text-[#8B5CF6] font-medium transition-colors">الدورات</Link></li>
-                  <li><Link href="/instructors" className="text-slate-500 hover:text-[#8B5CF6] font-medium transition-colors">المحاضرون</Link></li>
-                  <li><Link href="/verify" className="text-slate-500 hover:text-[#8B5CF6] font-medium transition-colors">التحقق من الشهادات</Link></li>
+                  <li><Link href="/" className="text-slate-500 hover:text-[#0EA5E9] font-medium transition-colors">الرئيسية</Link></li>
+                  <li><Link href="/courses" className="text-slate-500 hover:text-[#0EA5E9] font-medium transition-colors">الدورات</Link></li>
+                  <li><Link href="/instructors" className="text-slate-500 hover:text-[#0EA5E9] font-medium transition-colors">المحاضرون</Link></li>
+                  <li><Link href="/verify" className="text-slate-500 hover:text-[#0EA5E9] font-medium transition-colors">التحقق من الشهادات</Link></li>
                 </ul>
               </div>
 
@@ -107,11 +107,11 @@ export default function RootLayout({
               <div>
                 <h4 className="text-lg font-bold text-slate-800 mb-6">الدعم</h4>
                 <ul className="space-y-4">
-                  <li><Link href="/contact" className="text-slate-500 hover:text-[#8B5CF6] font-medium transition-colors">تواصل معنا</Link></li>
-                  <li><Link href="/faq" className="text-slate-500 hover:text-[#8B5CF6] font-medium transition-colors">الأسئلة الشائعة</Link></li>
-                  <li><Link href="/privacy" className="text-slate-500 hover:text-[#8B5CF6] font-medium transition-colors">سياسة الخصوصية</Link></li>
-                  <li><Link href="/terms" className="text-slate-500 hover:text-[#8B5CF6] font-medium transition-colors">الشروط والأحكام</Link></li>
-                  <li><Link href="/refunds" className="text-slate-500 hover:text-[#8B5CF6] font-medium transition-colors">سياسة الاسترجاع</Link></li>
+                  <li><Link href="/contact" className="text-slate-500 hover:text-[#0EA5E9] font-medium transition-colors">تواصل معنا</Link></li>
+                  <li><Link href="/faq" className="text-slate-500 hover:text-[#0EA5E9] font-medium transition-colors">الأسئلة الشائعة</Link></li>
+                  <li><Link href="/privacy" className="text-slate-500 hover:text-[#0EA5E9] font-medium transition-colors">سياسة الخصوصية</Link></li>
+                  <li><Link href="/terms" className="text-slate-500 hover:text-[#0EA5E9] font-medium transition-colors">الشروط والأحكام</Link></li>
+                  <li><Link href="/refunds" className="text-slate-500 hover:text-[#0EA5E9] font-medium transition-colors">سياسة الاسترجاع</Link></li>
                 </ul>
               </div>
 
@@ -139,3 +139,4 @@ export default function RootLayout({
     </html>
   );
 }
+

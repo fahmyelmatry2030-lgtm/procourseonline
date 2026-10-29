@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -28,8 +28,8 @@ export function Navigation() {
             href={link.href} 
             className={`px-5 py-2.5 rounded-full text-[15px] font-bold transition-all duration-300 ${
               isActive 
-                ? 'bg-purple-50 text-[#8B5CF6]' 
-                : 'text-slate-600 hover:text-[#8B5CF6] hover:bg-slate-50'
+                ? 'bg-sky-50 text-[#0EA5E9]' 
+                : 'text-slate-600 hover:text-[#0EA5E9] hover:bg-slate-50'
             }`}
           >
             {link.name}
@@ -39,3 +39,4 @@ export function Navigation() {
     </nav>
   );
 }
+
