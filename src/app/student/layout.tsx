@@ -41,11 +41,8 @@ export default async function StudentLayout({
         
         {/* Brand */}
         <div style={{ padding: '2rem 1.5rem', borderBottom: '1px solid var(--border)' }}>
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none' }}>
-            <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'linear-gradient(135deg, var(--primary), var(--secondary))', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <BookOpen size={20} color="white" />
-            </div>
-            <span style={{ fontSize: '1.35rem', fontWeight: '800', color: 'var(--foreground)' }}>المنصة</span>
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+            <img src="/logo.jpg" alt="ProCourse Online" style={{ height: '44px', width: 'auto', objectFit: 'contain' }} />
           </Link>
         </div>
 

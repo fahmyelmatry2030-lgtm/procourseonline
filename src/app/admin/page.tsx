@@ -20,7 +20,7 @@ export default async function AdminDashboard() {
   return (
     <div className="animate-fade-in">
       <h1 style={{ fontSize: '2rem', marginBottom: '1rem', color: 'var(--danger)' }}>لوحة الإدارة العليا</h1>
-      <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>مرحباً {user.name}. إليك نظرة عامة على إحصائيات المنصة.</p>
+      <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>مرحباً {user.name}. إليك نظرة عامة على إحصائيات ProCourse Online.</p>
       
       <div className="grid grid-cols-4" style={{ gap: '1.5rem', marginBottom: '3rem' }}>
         <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>

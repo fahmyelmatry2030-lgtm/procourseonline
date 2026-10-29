@@ -137,7 +137,7 @@ export default function LoginPage() {
               <div className="w-12 h-12 rounded-full border-2 border-[#6D28D9] bg-sky-400 z-10"></div>
               <div className="w-12 h-12 rounded-full border-2 border-[#6D28D9] bg-pink-400 flex items-center justify-center font-bold text-sm">+10k</div>
             </div>
-            <span className="text-white/80 font-bold text-sm">متدرب نشط على المنصة</span>
+            <span className="text-white/80 font-bold text-sm">متدرب نشط على ProCourse Online</span>
           </div>
         </div>
       </div>

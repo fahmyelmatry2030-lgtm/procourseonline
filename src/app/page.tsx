@@ -18,7 +18,7 @@ export default function Home() {
             {/* Content */}
             <div className="lg:w-1/2 text-center lg:text-right">
               <div className="friendly-badge mb-6">
-                <Star size={16} fill="currentColor" /> المنصة الأولى للتعليم المباشر
+                <Star size={16} fill="currentColor" /> ProCourse Online — المنصة الأولى للتعليم المباشر
               </div>
               
               <h1 className="text-[3rem] md:text-[4rem] font-black text-slate-800 leading-[1.2] mb-6">
@@ -227,7 +227,7 @@ export default function Home() {
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-black text-slate-800 mb-3">كيف تعمل المنصة؟</h2>
+            <h2 className="text-3xl font-black text-slate-800 mb-3">كيف تعمل ProCourse Online؟</h2>
             <p className="text-slate-500 font-medium text-lg">خطوات بسيطة للبدء في رحلتك التعليمية.</p>
           </div>
 
@@ -301,14 +301,14 @@ export default function Home() {
           
           <div className="text-center mb-16">
             <h2 className="text-3xl font-black text-slate-800 mb-3">آراء الطلاب</h2>
-            <p className="text-slate-500 font-medium text-lg">قصص نجاح حقيقية من طلاب المنصة.</p>
+            <p className="text-slate-500 font-medium text-lg">قصص نجاح حقيقية من طلاب ProCourse Online.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              "المنصة ممتازة جداً والمحاضرين على مستوى عالي من الاحترافية. استفدت كثيراً من الدورات المباشرة.",
+              "ProCourse Online ممتازة جداً والمحاضرين على مستوى عالي من الاحترافية. استفدت كثيراً من الدورات المباشرة.",
               "أفضل تجربة تعليمية مررت بها، سهولة في الوصول للمحتوى واختبارات دقيقة لتقييم المستوى.",
-              "الشهادة المعتمدة ساعدتني كثيراً في الحصول على وظيفتي الحالية. شكراً لإدارة المنصة."
+              "الشهادة المعتمدة ساعدتني كثيراً في الحصول على وظيفتي الحالية. شكراً لإدارة ProCourse Online."
             ].map((review, i) => (
               <div key={i} className="friendly-card p-8 border border-slate-100">
                 <div className="flex items-center gap-1 mb-4 text-amber-400">
@@ -343,7 +343,7 @@ export default function Home() {
 
           <div className="space-y-4">
             {[
-              "كيف أسجل في المنصة؟",
+              "كيف أسجل في ProCourse Online؟",
               "كيف يتم الدفع لشراء دورة؟",
               "هل الدورات التي تقدمونها مباشرة؟",
               "هل يوجد تسجيل للمحاضرات المباشرة للرجوع إليها لاحقاً؟",
@@ -355,7 +355,7 @@ export default function Home() {
                   <ChevronDown className="text-slate-400 group-open:rotate-180 transition-transform" />
                 </summary>
                 <p className="text-slate-500 font-medium mt-4 leading-relaxed pr-2">
-                  إجابة توضيحية للسؤال المذكور. هذا النص هو نص تجريبي لبيان شكل المحتوى داخل الأسئلة الشائعة، ويمكن تغييره لاحقاً بما يتناسب مع سياسات المنصة الفعلية.
+                  إجابة توضيحية للسؤال المذكور. هذا النص هو نص تجريبي لبيان شكل المحتوى داخل الأسئلة الشائعة، ويمكن تغييره لاحقاً بما يتناسب مع سياسات ProCourse Online الفعلية.
                 </p>
               </details>
             ))}
