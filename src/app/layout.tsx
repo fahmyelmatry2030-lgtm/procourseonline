@@ -8,6 +8,11 @@ import { MobileNav } from '@/components/MobileNav';
 export const metadata: Metadata = {
   title: 'ProCourse Online | رحلتك نحو التعلم',
   description: 'منصة ProCourse Online للتعليم المباشر والتفاعلي',
+  icons: {
+    icon: '/logo.jpg',
+    shortcut: '/logo.jpg',
+    apple: '/logo.jpg',
+  },
 };
 
 export default function RootLayout({
