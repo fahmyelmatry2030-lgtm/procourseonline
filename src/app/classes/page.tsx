@@ -2,6 +2,8 @@ import prisma from '@/lib/prisma';
 import Link from 'next/link';
 import { BookOpen, Users, GraduationCap, ArrowLeft } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 const gradeLevelColors: Record<string, string> = {
   'ابتدائي': '#0EA5E9',
   'إعدادي': '#F97316',
@@ -15,14 +17,19 @@ const gradeLevelBg: Record<string, string> = {
 };
 
 export default async function ClassesPage() {
-  const classes = await prisma.class.findMany({
-    where: { status: 'ACTIVE' },
-    include: {
-      subjects: { include: { teacher: true } },
-      enrollments: true,
-    },
-    orderBy: [{ gradeLevel: 'asc' }, { gradeNumber: 'asc' }],
-  });
+  let classes: any[] = [];
+  try {
+    classes = await prisma.class.findMany({
+      where: { status: 'ACTIVE' },
+      include: {
+        subjects: { include: { teacher: true } },
+        enrollments: true,
+      },
+      orderBy: [{ gradeLevel: 'asc' }, { gradeNumber: 'asc' }],
+    });
+  } catch (error) {
+    console.error('Error fetching classes:', error);
+  }
 
   // تجميع حسب المرحلة
   const grouped = classes.reduce<Record<string, typeof classes>>((acc, cls) => {
@@ -99,18 +106,18 @@ export default async function ClassesPage() {
                     <div className="flex items-center gap-6 text-sm font-medium text-slate-500 mb-5">
                       <div className="flex items-center gap-1.5">
                         <BookOpen size={15} className="text-[#0EA5E9]" />
-                        {cls.subjects.length} مادة
+                        {cls.subjects?.length || 0} مادة
                       </div>
                       <div className="flex items-center gap-1.5">
                         <Users size={15} className="text-[#F97316]" />
-                        {cls.enrollments.length} طالب
+                        {cls.enrollments?.length || 0} طالب
                       </div>
                     </div>
 
                     {/* Subjects Preview */}
-                    {cls.subjects.length > 0 && (
+                    {cls.subjects && cls.subjects.length > 0 && (
                       <div className="flex flex-wrap gap-2 mb-5">
-                        {cls.subjects.slice(0, 4).map(sub => (
+                        {cls.subjects.slice(0, 4).map((sub: any) => (
                           <span
                             key={sub.id}
                             className="text-xs font-bold px-3 py-1 rounded-full"

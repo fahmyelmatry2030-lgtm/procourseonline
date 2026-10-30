@@ -4,6 +4,8 @@ import { Search, Filter, Star, Clock, Users, PlayCircle } from 'lucide-react';
 import { getDynamicCourseStatus } from '@/lib/courseStatus';
 import { SortSelect } from '@/components/SortSelect';
 
+export const dynamic = 'force-dynamic';
+
 const statusLabels: Record<string, string> = {
   OPEN: 'مفتوح للتسجيل',
   CLOSED: 'مغلق',

@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { BookOpen, Users, GraduationCap, Lock, CheckCircle, ArrowLeft } from 'lucide-react';
 import { enrollInClassAction } from '@/actions/school';
 
+export const dynamic = 'force-dynamic';
+
 export default async function ClassDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const cookieStore = await cookies();
