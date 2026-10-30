@@ -10,7 +10,7 @@ export function Navigation() {
     { name: 'الرئيسية', href: '/' },
     { name: 'الصفوف الدراسية', href: '/classes' },
     { name: 'الدورات', href: '/courses' },
-    { name: 'المدرسون', href: '/instructors' },
+    { name: 'المعلمون والمحاضرون', href: '/instructors' },
     { name: 'التحقق من الشهادات', href: '/verify' },
     { name: 'تواصل معنا', href: '/contact' },
   ];
