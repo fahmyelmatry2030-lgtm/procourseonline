@@ -2,7 +2,7 @@ import prisma from '@/lib/prisma';
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { BookOpen, Users, GraduationCap, Lock, CheckCircle, ArrowLeft, User } from 'lucide-react';
+import { BookOpen, Users, GraduationCap, Lock, CheckCircle, ArrowLeft } from 'lucide-react';
 import { enrollInClassAction } from '@/actions/school';
 
 export default async function ClassDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -10,25 +10,30 @@ export default async function ClassDetailPage({ params }: { params: Promise<{ id
   const cookieStore = await cookies();
   const userId = cookieStore.get('userId')?.value;
 
-  const cls = await prisma.class.findUnique({
-    where: { id },
-    include: {
-      subjects: {
-        include: {
-          teacher: true,
-          payments: userId ? { where: { studentId: userId } } : false,
-          _count: { select: { lectures: true, files: true } },
+  let cls: any = null;
+  try {
+    cls = await prisma.class.findUnique({
+      where: { id },
+      include: {
+        subjects: {
+          include: {
+            teacher: true,
+            payments: true,
+            _count: { select: { lectures: true, files: true } },
+          },
+          orderBy: { createdAt: 'asc' },
         },
-        orderBy: { createdAt: 'asc' },
+        enrollments: true,
       },
-      enrollments: true,
-    },
-  });
+    });
+  } catch (error) {
+    console.error('Error fetching class:', error);
+  }
 
   if (!cls) notFound();
 
   const isEnrolled = userId
-    ? cls.enrollments.some(e => e.studentId === userId)
+    ? cls.enrollments?.some((e: any) => e.studentId === userId)
     : false;
 
   const gradeLevelColors: Record<string, string> = {
@@ -64,11 +69,11 @@ export default async function ClassDetailPage({ params }: { params: Promise<{ id
               <div className="flex items-center gap-8 mt-6">
                 <div className="flex items-center gap-2 text-slate-500 font-medium">
                   <BookOpen size={18} style={{ color }} />
-                  <span>{cls.subjects.length} مادة دراسية</span>
+                  <span>{cls.subjects?.length || 0} مادة دراسية</span>
                 </div>
                 <div className="flex items-center gap-2 text-slate-500 font-medium">
                   <Users size={18} style={{ color }} />
-                  <span>{cls.enrollments.length} طالب مسجل</span>
+                  <span>{cls.enrollments?.length || 0} طالب مسجل</span>
                 </div>
               </div>
             </div>
@@ -90,10 +95,8 @@ export default async function ClassDetailPage({ params }: { params: Promise<{ id
                 <div>
                   <h3 className="text-lg font-black text-slate-800 mb-2">سجل في هذا الصف</h3>
                   <p className="text-slate-400 text-sm mb-5">التسجيل في الصف مجاني — تدفع على كل مادة على حدة</p>
-                  <form action={async () => {
-                    'use server';
-                    await enrollInClassAction(id);
-                  }}>
+                  <form action={enrollInClassAction}>
+                    <input type="hidden" name="classId" value={id} />
                     <button type="submit" className="btn btn-primary w-full">
                       سجل الآن مجاناً
                     </button>
@@ -118,8 +121,10 @@ export default async function ClassDetailPage({ params }: { params: Promise<{ id
         <h2 className="text-2xl font-black text-[#1B2B5E] mb-8">المواد الدراسية</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {cls.subjects.map(subject => {
-            const isPaid = (subject as any).payments?.length > 0;
+          {cls.subjects?.map((subject: any) => {
+            const isPaid = userId && subject.payments
+              ? subject.payments.some((p: any) => p.studentId === userId && p.status === 'COMPLETED')
+              : false;
 
             return (
               <div key={subject.id} className="friendly-card border border-slate-100 overflow-hidden">
@@ -167,8 +172,8 @@ export default async function ClassDetailPage({ params }: { params: Promise<{ id
                   )}
 
                   <div className="flex items-center gap-4 text-xs font-medium text-slate-400 mb-4">
-                    <span>{(subject as any)._count.lectures} محاضرة</span>
-                    <span>{(subject as any)._count.files} ملف</span>
+                    <span>{subject._count?.lectures || 0} محاضرة</span>
+                    <span>{subject._count?.files || 0} ملف</span>
                   </div>
 
                   {isEnrolled && !isPaid && subject.price > 0 && (
@@ -199,7 +204,7 @@ export default async function ClassDetailPage({ params }: { params: Promise<{ id
           })}
         </div>
 
-        {cls.subjects.length === 0 && (
+        {(!cls.subjects || cls.subjects.length === 0) && (
           <div className="friendly-card p-12 text-center text-slate-400">
             <BookOpen size={40} className="mx-auto mb-3 opacity-30" />
             <p className="font-bold">لم تُضف مواد لهذا الصف بعد</p>
