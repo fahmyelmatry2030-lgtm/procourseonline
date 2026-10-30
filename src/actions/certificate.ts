@@ -24,9 +24,9 @@ export async function verifyCertificateAction(formData: FormData) {
     return { 
       success: true, 
       certificate: {
-        studentName: certificate.student.name,
-        courseName: certificate.courseName,
-        instructorName: certificate.instructorName,
+        studentName: certificate.student.name || certificate.student.phone,
+        courseName: certificate.courseName || certificate.subjectName || 'شهادة إتمام معتمدة',
+        instructorName: certificate.instructorName || certificate.teacherName || 'ProCourse Online',
         issuedAt: certificate.issuedAt,
         status: 'صحيحة وموثقة'
       }

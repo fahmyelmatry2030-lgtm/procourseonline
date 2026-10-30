@@ -161,15 +161,17 @@ model SubjectAttendance {
 // ─── الشهادات ──────────────────────────────────────────────────────────────
 
 model Certificate {
-  id          String   @id @default(uuid())
-  studentId   String
-  subjectName String
-  teacherName String?
-  className   String?
-  grade       Float?   // الدرجة
-  issuedAt    DateTime @default(now())
-  qrCodeUrl   String?
-  student     User     @relation(fields: [studentId], references: [id])
+  id             String   @id @default(uuid())
+  studentId      String
+  courseName     String?
+  subjectName    String?
+  instructorName String?
+  teacherName    String?
+  className      String?
+  grade          Float?   // الدرجة
+  issuedAt       DateTime @default(now())
+  qrCodeUrl      String?
+  student        User     @relation(fields: [studentId], references: [id])
 }
 
 // ─── الإشعارات ─────────────────────────────────────────────────────────────

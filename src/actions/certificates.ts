@@ -18,7 +18,7 @@ export async function verifyCertificateAction(code: string) {
       valid: true,
       data: {
         studentName: certificate.student.name || certificate.student.phone,
-        courseName: certificate.courseName,
+        courseName: certificate.courseName || certificate.subjectName || 'شهادة إتمام معتمدة',
         issuedAt: certificate.issuedAt.toLocaleDateString('ar-EG'),
       },
     };
