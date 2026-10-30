@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -8,8 +8,9 @@ export function Navigation() {
 
   const links = [
     { name: 'الرئيسية', href: '/' },
+    { name: 'الصفوف الدراسية', href: '/classes' },
     { name: 'الدورات', href: '/courses' },
-    { name: 'المحاضرون', href: '/instructors' },
+    { name: 'المدرسون', href: '/instructors' },
     { name: 'التحقق من الشهادات', href: '/verify' },
     { name: 'تواصل معنا', href: '/contact' },
   ];
@@ -17,7 +18,6 @@ export function Navigation() {
   return (
     <nav className="hidden lg:flex items-center gap-1">
       {links.map((link) => {
-        // Exact match for home, startsWith for others to keep active state on sub-pages (e.g. /courses/1)
         const isActive = link.href === '/' 
           ? pathname === '/'
           : pathname.startsWith(link.href);
@@ -39,4 +39,3 @@ export function Navigation() {
     </nav>
   );
 }
-

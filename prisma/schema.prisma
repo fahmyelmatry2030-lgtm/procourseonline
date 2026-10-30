@@ -4,82 +4,237 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:./dev.db"
+  url      = env("DATABASE_URL")
 }
+
+// ─── المستخدمون ────────────────────────────────────────────────────────────
 
 model User {
-  id            String         @id @default(uuid())
-  phone         String         @unique
-  email         String?        @unique
-  password      String?
-  name          String?
-  bio           String?
-  avatar        String?
-  role          String         @default("STUDENT") // STUDENT, INSTRUCTOR, ADMIN
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  courses       Course[]       @relation("InstructorCourses")
-  enrollments   Enrollment[]
-  payments      Payment[]
-  certificates  Certificate[]
-  reviews       Review[]
-  attendances   Attendance[]
-  notifications Notification[]
+  id               String            @id @default(uuid())
+  phone            String            @unique
+  email            String?           @unique
+  password         String?
+  name             String?
+  bio              String?
+  avatar           String?
+  role             String            @default("STUDENT") // STUDENT, TEACHER, ADMIN
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  // علاقات المدرس
+  subjects         Subject[]         @relation("TeacherSubjects")
+
+  // علاقات الطالب
+  classEnrollments ClassEnrollment[]
+  subjectPayments  SubjectPayment[]
+  certificates     Certificate[]
+  notifications    Notification[]
+  attendances      SubjectAttendance[]
+
+  // الموديلات القديمة (للتوافق)
+  courses          Course[]          @relation("InstructorCourses")
+  enrollments      Enrollment[]
+  payments         Payment[]
+  reviews          Review[]
 }
 
+// ─── الصفوف ────────────────────────────────────────────────────────────────
+
+model Class {
+  id          String            @id @default(uuid())
+  name        String            // "الصف الأول الابتدائي"
+  gradeLevel  String            // "ابتدائي" | "إعدادي" | "ثانوي"
+  gradeNumber Int               // 1-6 ابتدائي | 1-3 إعدادي | 1-3 ثانوي
+  section     String?           // "أ" | "ب" | "ج"
+  description String?
+  thumbnail   String?
+  academicYear String           @default("2025-2026")
+  status      String            @default("ACTIVE") // ACTIVE | ARCHIVED
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  subjects    Subject[]
+  enrollments ClassEnrollment[]
+}
+
+// ─── تسجيل الطالب في الصف ─────────────────────────────────────────────────
+
+model ClassEnrollment {
+  id        String   @id @default(uuid())
+  studentId String
+  classId   String
+  student   User     @relation(fields: [studentId], references: [id])
+  class     Class    @relation(fields: [classId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([studentId, classId])
+}
+
+// ─── المواد ────────────────────────────────────────────────────────────────
+
+model Subject {
+  id          String    @id @default(uuid())
+  name        String    // "الرياضيات" | "اللغة العربية"
+  description String?
+  thumbnail   String?
+  price       Float     @default(0)  // سعر المادة منفردة
+  classId     String
+  class       Class     @relation(fields: [classId], references: [id])
+  teacherId   String?
+  teacher     User?     @relation("TeacherSubjects", fields: [teacherId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  lectures    SubjectLecture[]
+  files       SubjectFile[]
+  payments    SubjectPayment[]
+  attendances SubjectAttendance[]
+}
+
+// ─── دفع المادة ────────────────────────────────────────────────────────────
+
+model SubjectPayment {
+  id            String   @id @default(uuid())
+  studentId     String
+  subjectId     String
+  amount        Float
+  paymentMethod String   @default("VISA") // VISA | PAYPAL | CASH
+  status        String   @default("COMPLETED") // PENDING | COMPLETED | FAILED
+  couponCode    String?
+  student       User     @relation(fields: [studentId], references: [id])
+  subject       Subject  @relation(fields: [subjectId], references: [id])
+  createdAt     DateTime @default(now())
+
+  @@unique([studentId, subjectId]) // كل طالب يدفع مادة مرة واحدة
+}
+
+// ─── محاضرات المادة ────────────────────────────────────────────────────────
+
+model SubjectLecture {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  type        String   @default("RECORDED") // LIVE | RECORDED
+  liveStatus  String   @default("SCHEDULED") // SCHEDULED | LIVE | ENDED
+  videoUrl    String?
+  liveUrl     String?  // رابط Zoom أو Meet
+  date        DateTime?
+  duration    Int      @default(0) // بالدقائق
+  subjectId   String
+  subject     Subject  @relation(fields: [subjectId], references: [id])
+  createdAt   DateTime @default(now())
+
+  attendances SubjectAttendance[]
+}
+
+// ─── ملفات المادة ──────────────────────────────────────────────────────────
+
+model SubjectFile {
+  id         String   @id @default(uuid())
+  title      String
+  fileUrl    String
+  type       String   // PDF | IMAGE | VIDEO | ZIP
+  accessType String   @default("DOWNLOAD") // DOWNLOAD | VIEW_ONLY
+  subjectId  String
+  subject    Subject  @relation(fields: [subjectId], references: [id])
+  createdAt  DateTime @default(now())
+}
+
+// ─── حضور المحاضرات ────────────────────────────────────────────────────────
+
+model SubjectAttendance {
+  id              String         @id @default(uuid())
+  studentId       String
+  lectureId       String
+  subjectId       String
+  joinTime        DateTime
+  leaveTime       DateTime?
+  durationMinutes Int            @default(0)
+  percentage      Float          @default(0.0)
+  student         User           @relation(fields: [studentId], references: [id])
+  lecture         SubjectLecture @relation(fields: [lectureId], references: [id])
+  subject         Subject        @relation(fields: [subjectId], references: [id])
+  createdAt       DateTime       @default(now())
+}
+
+// ─── الشهادات ──────────────────────────────────────────────────────────────
+
+model Certificate {
+  id            String   @id @default(uuid())
+  studentId     String
+  subjectName   String
+  teacherName   String?
+  className     String?
+  grade         Float?   // الدرجة
+  issuedAt      DateTime @default(now())
+  qrCodeUrl     String?
+  student       User     @relation(fields: [studentId], references: [id])
+}
+
+// ─── الإشعارات ─────────────────────────────────────────────────────────────
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  title     String
+  message   String
+  type      String   @default("INFO") // INFO | SUCCESS | WARNING
+  isRead    Boolean  @default(false)
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+// ─── الموديلات القديمة (للتوافق المؤقت) ──────────────────────────────────
+
 model Course {
-  id               String         @id @default(uuid())
+  id               String       @id @default(uuid())
   title            String
   description      String
   shortDescription String?
   thumbnail        String?
-  goals            String?        // JSON string array
-  requirements     String?        // JSON string array
-  targetAudience   String?        // JSON string array
-  syllabus         String?        // JSON representation of curriculum
   instructorId     String
-  instructor       User           @relation("InstructorCourses", fields: [instructorId], references: [id])
+  instructor       User         @relation("InstructorCourses", fields: [instructorId], references: [id])
   startDate        DateTime
   durationWeeks    Int
-  totalHours       Int            @default(0)
+  totalHours       Int          @default(0)
   maxStudents      Int?
   registrationEnd  DateTime
   price            Float
-  refundPolicyDays Int            @default(0) // 0 means no refund
-  status           String         @default("DRAFT") // OPEN, CLOSED, STARTING_SOON, IN_PROGRESS, ENDED, CANCELLED
-  createdAt        DateTime       @default(now())
-  updatedAt        DateTime       @updatedAt
+  refundPolicyDays Int          @default(0)
+  status           String       @default("DRAFT")
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
   lectures         Lecture[]
   enrollments      Enrollment[]
-  quizzes          Quiz[]
+  reviews          Review[]
   files            File[]
   coupons          Coupon[]
-  reviews          Review[]
+  quizzes          Quiz[]
 }
 
 model Lecture {
-  id          String   @id @default(uuid())
+  id          String       @id @default(uuid())
   title       String
-  type        String   @default("RECORDED") // LIVE, RECORDED
-  liveStatus  String   @default("SCHEDULED") // SCHEDULED, LIVE, ENDED
-  videoUrl    String?  // Mux/HLS URL or Signed URL
-  liveUrl     String?  // Zoom/Meet URL
+  type        String       @default("RECORDED")
+  liveStatus  String       @default("SCHEDULED")
+  videoUrl    String?
+  liveUrl     String?
   date        DateTime?
   courseId    String
-  course      Course   @relation(fields: [courseId], references: [id])
-  createdAt   DateTime @default(now())
+  course      Course       @relation(fields: [courseId], references: [id])
+  createdAt   DateTime     @default(now())
   attendances Attendance[]
 }
 
 model File {
-  id          String   @id @default(uuid())
-  title       String
-  fileUrl     String
-  type        String   // PDF, IMAGE, CODE, ZIP
-  accessType  String   @default("DOWNLOAD") // DOWNLOAD, VIEW_ONLY
-  courseId    String
-  course      Course   @relation(fields: [courseId], references: [id])
-  createdAt   DateTime @default(now())
+  id         String   @id @default(uuid())
+  title      String
+  fileUrl    String
+  type       String
+  accessType String   @default("DOWNLOAD")
+  courseId   String
+  course     Course   @relation(fields: [courseId], references: [id])
+  createdAt  DateTime @default(now())
 }
 
 model Enrollment {
@@ -89,7 +244,6 @@ model Enrollment {
   student   User     @relation(fields: [studentId], references: [id])
   course    Course   @relation(fields: [courseId], references: [id])
   createdAt DateTime @default(now())
-
   @@unique([studentId, courseId])
 }
 
@@ -98,71 +252,61 @@ model Payment {
   studentId     String
   student       User     @relation(fields: [studentId], references: [id])
   amount        Float
-  paymentMethod String   // "VISA", "PAYPAL", "CRYPTO"
-  status        String   // "PENDING", "COMPLETED", "FAILED"
+  paymentMethod String
+  status        String
   couponCode    String?
   createdAt     DateTime @default(now())
 }
 
 model Quiz {
-  id                String         @id @default(uuid())
-  title             String
-  startDate         DateTime?
-  endDate           DateTime?
-  durationMinutes   Int?
-  attemptsAllowed   Int            @default(1)
-  passingScore      Float          @default(50.0)
-  randomizeQuestions Boolean       @default(false)
-  showResults       Boolean        @default(true)
-  courseId          String
-  course            Course         @relation(fields: [courseId], references: [id])
-  questions         QuizQuestion[]
-  createdAt         DateTime       @default(now())
+  id                 String         @id @default(uuid())
+  title              String
+  startDate          DateTime?
+  endDate            DateTime?
+  durationMinutes    Int?
+  attemptsAllowed    Int            @default(1)
+  passingScore       Float          @default(50.0)
+  randomizeQuestions Boolean        @default(false)
+  showResults        Boolean        @default(true)
+  courseId           String
+  course             Course         @relation(fields: [courseId], references: [id])
+  questions          QuizQuestion[]
+  createdAt          DateTime       @default(now())
 }
 
 model QuizQuestion {
-  id        String   @id @default(uuid())
-  quizId    String
-  quiz      Quiz     @relation(fields: [quizId], references: [id])
-  question  String
-  type      String   @default("MCQ") // MCQ, TRUE_FALSE, ESSAY
-  options   String?  // JSON string of options
-  answer    String   // Correct answer (or null for essay)
-}
-
-model Certificate {
-  id             String   @id @default(uuid()) // Unique verification code
-  qrCodeUrl      String?  
-  studentId      String
-  student        User     @relation(fields: [studentId], references: [id])
-  courseName     String
-  instructorName String?
-  issuedAt       DateTime @default(now())
-}
-
-model Coupon {
-  id          String   @id @default(uuid())
-  code        String   @unique
-  type        String   // PERCENT, FIXED
-  value       Float
-  expiryDate  DateTime?
-  maxUses     Int?
-  usesCount   Int      @default(0)
-  courseId    String?  // If null, applies to all courses
-  course      Course?  @relation(fields: [courseId], references: [id])
-  createdAt   DateTime @default(now())
+  id       String   @id @default(uuid())
+  quizId   String
+  quiz     Quiz     @relation(fields: [quizId], references: [id])
+  question String
+  type     String   @default("MCQ")
+  options  String?
+  answer   String
 }
 
 model Review {
-  id          String   @id @default(uuid())
-  studentId   String
-  courseId    String
-  rating      Int      // 1 to 5
-  comment     String?
-  isApproved  Boolean  @default(false) // Needs Admin/Instructor approval
-  student     User     @relation(fields: [studentId], references: [id])
-  course      Course   @relation(fields: [courseId], references: [id])
-  createdAt   DateTime @default(now())
+  id         String   @id @default(uuid())
+  studentId  String
+  courseId   String
+  rating     Int
+  comment    String?
+  isApproved Boolean  @default(false)
+  student    User     @relation(fields: [studentId], references: [id])
+  course     Course   @relation(fields: [courseId], references: [id])
+  createdAt  DateTime @default(now())
+}
+
+model Coupon {
+  id         String    @id @default(uuid())
+  code       String    @unique
+  type       String
+  value      Float
+  expiryDate DateTime?
+  maxUses    Int?
+  usesCount  Int       @default(0)
+  courseId   String?
+  course     Course?   @relation(fields: [courseId], references: [id])
+  createdAt  DateTime  @default(now())
 }
 
 model Attendance {
@@ -176,15 +320,4 @@ model Attendance {
   student         User     @relation(fields: [studentId], references: [id])
   lecture         Lecture  @relation(fields: [lectureId], references: [id])
   createdAt       DateTime @default(now())
-}
-
-model Notification {
-  id        String   @id @default(uuid())
-  userId    String
-  title     String
-  message   String
-  type      String   // INFO, SUCCESS, WARNING
-  isRead    Boolean  @default(false)
-  user      User     @relation(fields: [userId], references: [id])
-  createdAt DateTime @default(now())
 }
