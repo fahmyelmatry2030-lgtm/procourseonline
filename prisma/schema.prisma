@@ -10,51 +10,52 @@ datasource db {
 // ─── المستخدمون ────────────────────────────────────────────────────────────
 
 model User {
-  id               String            @id @default(uuid())
-  phone            String            @unique
-  email            String?           @unique
-  password         String?
-  name             String?
-  bio              String?
-  avatar           String?
-  role             String            @default("STUDENT") // STUDENT, TEACHER, ADMIN
-  createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
+  id                 String              @id @default(uuid())
+  phone              String              @unique
+  email              String?             @unique
+  password           String?
+  name               String?
+  bio                String?
+  avatar             String?
+  role               String              @default("STUDENT") // STUDENT, TEACHER, ADMIN
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
 
   // علاقات المدرس
-  subjects         Subject[]         @relation("TeacherSubjects")
+  subjects           Subject[]           @relation("TeacherSubjects")
 
   // علاقات الطالب
-  classEnrollments ClassEnrollment[]
-  subjectPayments  SubjectPayment[]
-  certificates     Certificate[]
-  notifications    Notification[]
-  attendances      SubjectAttendance[]
+  classEnrollments   ClassEnrollment[]
+  subjectPayments    SubjectPayment[]
+  certificates       Certificate[]
+  notifications      Notification[]
+  subjectAttendances SubjectAttendance[]
 
   // الموديلات القديمة (للتوافق)
-  courses          Course[]          @relation("InstructorCourses")
-  enrollments      Enrollment[]
-  payments         Payment[]
-  reviews          Review[]
+  courses            Course[]            @relation("InstructorCourses")
+  enrollments        Enrollment[]
+  payments           Payment[]
+  reviews            Review[]
+  attendances        Attendance[]
 }
 
 // ─── الصفوف ────────────────────────────────────────────────────────────────
 
 model Class {
-  id          String            @id @default(uuid())
-  name        String            // "الصف الأول الابتدائي"
-  gradeLevel  String            // "ابتدائي" | "إعدادي" | "ثانوي"
-  gradeNumber Int               // 1-6 ابتدائي | 1-3 إعدادي | 1-3 ثانوي
-  section     String?           // "أ" | "ب" | "ج"
-  description String?
-  thumbnail   String?
-  academicYear String           @default("2025-2026")
-  status      String            @default("ACTIVE") // ACTIVE | ARCHIVED
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
+  id           String            @id @default(uuid())
+  name         String            // "الصف الأول الابتدائي"
+  gradeLevel   String            // "ابتدائي" | "إعدادي" | "ثانوي"
+  gradeNumber  Int               // 1-6 ابتدائي | 1-3 إعدادي | 1-3 ثانوي
+  section      String?           // "أ" | "ب" | "ج"
+  description  String?
+  thumbnail    String?
+  academicYear String            @default("2025-2026")
+  status       String            @default("ACTIVE") // ACTIVE | ARCHIVED
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
 
-  subjects    Subject[]
-  enrollments ClassEnrollment[]
+  subjects     Subject[]
+  enrollments  ClassEnrollment[]
 }
 
 // ─── تسجيل الطالب في الصف ─────────────────────────────────────────────────
@@ -73,17 +74,17 @@ model ClassEnrollment {
 // ─── المواد ────────────────────────────────────────────────────────────────
 
 model Subject {
-  id          String    @id @default(uuid())
-  name        String    // "الرياضيات" | "اللغة العربية"
+  id          String              @id @default(uuid())
+  name        String              // "الرياضيات" | "اللغة العربية"
   description String?
   thumbnail   String?
-  price       Float     @default(0)  // سعر المادة منفردة
+  price       Float               @default(0)  // سعر المادة منفردة
   classId     String
-  class       Class     @relation(fields: [classId], references: [id])
+  class       Class               @relation(fields: [classId], references: [id])
   teacherId   String?
-  teacher     User?     @relation("TeacherSubjects", fields: [teacherId], references: [id])
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  teacher     User?               @relation("TeacherSubjects", fields: [teacherId], references: [id])
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
 
   lectures    SubjectLecture[]
   files       SubjectFile[]
@@ -111,18 +112,18 @@ model SubjectPayment {
 // ─── محاضرات المادة ────────────────────────────────────────────────────────
 
 model SubjectLecture {
-  id          String   @id @default(uuid())
+  id          String              @id @default(uuid())
   title       String
   description String?
-  type        String   @default("RECORDED") // LIVE | RECORDED
-  liveStatus  String   @default("SCHEDULED") // SCHEDULED | LIVE | ENDED
+  type        String              @default("RECORDED") // LIVE | RECORDED
+  liveStatus  String              @default("SCHEDULED") // SCHEDULED | LIVE | ENDED
   videoUrl    String?
-  liveUrl     String?  // رابط Zoom أو Meet
+  liveUrl     String?             // رابط Zoom أو Meet
   date        DateTime?
-  duration    Int      @default(0) // بالدقائق
+  duration    Int                 @default(0) // بالدقائق
   subjectId   String
-  subject     Subject  @relation(fields: [subjectId], references: [id])
-  createdAt   DateTime @default(now())
+  subject     Subject             @relation(fields: [subjectId], references: [id])
+  createdAt   DateTime            @default(now())
 
   attendances SubjectAttendance[]
 }
@@ -160,15 +161,15 @@ model SubjectAttendance {
 // ─── الشهادات ──────────────────────────────────────────────────────────────
 
 model Certificate {
-  id            String   @id @default(uuid())
-  studentId     String
-  subjectName   String
-  teacherName   String?
-  className     String?
-  grade         Float?   // الدرجة
-  issuedAt      DateTime @default(now())
-  qrCodeUrl     String?
-  student       User     @relation(fields: [studentId], references: [id])
+  id          String   @id @default(uuid())
+  studentId   String
+  subjectName String
+  teacherName String?
+  className   String?
+  grade       Float?   // الدرجة
+  issuedAt    DateTime @default(now())
+  qrCodeUrl   String?
+  student     User     @relation(fields: [studentId], references: [id])
 }
 
 // ─── الإشعارات ─────────────────────────────────────────────────────────────
@@ -244,6 +245,7 @@ model Enrollment {
   student   User     @relation(fields: [studentId], references: [id])
   course    Course   @relation(fields: [courseId], references: [id])
   createdAt DateTime @default(now())
+
   @@unique([studentId, courseId])
 }
 
