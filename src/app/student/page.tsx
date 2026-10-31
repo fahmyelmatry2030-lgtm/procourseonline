@@ -231,8 +231,8 @@ export default async function StudentDashboard() {
             <h2 style={{ fontSize: '1.5rem', fontWeight: '800', color: 'var(--foreground)', margin: 0 }}>موادي الدراسية</h2>
             <p style={{ color: 'var(--muted-foreground)', fontSize: '0.9rem', margin: '0.25rem 0 0 0' }}>المواد التي قمت بالاشتراك بها في صفوفك الدراسية</p>
           </div>
-          <Link href="/classes" className="btn btn-outline" style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }}>
-            تصفح الصفوف الدراسية
+          <Link href="/student/classes" className="btn btn-outline" style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }}>
+            عرض مواد صفي الدراسي
           </Link>
         </div>
 
@@ -245,8 +245,8 @@ export default async function StudentDashboard() {
             <p style={{ color: 'var(--muted-foreground)', marginBottom: '1.5rem', maxWidth: '500px', margin: '0 auto 1.5rem auto' }}>
               انضم إلى صفك الدراسي (ابتدائي، إعدادي، ثانوي) واختر المواد التي ترغب في مذاكرتها مع نخبة المدرسين.
             </p>
-            <Link href="/classes" className="btn btn-primary">
-              عرض كل الصفوف والمواد
+            <Link href="/student/classes" className="btn btn-primary" style={{ padding: '0.8rem 2rem' }}>
+              عرض مواد صفي الدراسي والاشتراك
             </Link>
           </div>
         ) : (
