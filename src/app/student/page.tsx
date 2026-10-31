@@ -9,14 +9,16 @@ export default async function StudentDashboard() {
   const cookieStore = await cookies();
   const userId = cookieStore.get('userId')?.value;
 
+  const user = userId ? await prisma.user.findUnique({ where: { id: userId } }) : null;
+
   // 1. دورات الكورسات العامة
   const enrollments = await prisma.enrollment.findMany({
     where: { studentId: userId },
     include: { course: true },
   });
 
-  // 2. الصفوف الدراسية المسجل بها الطالب
-  const classEnrollments = await prisma.classEnrollment.findMany({
+  // 2. الصف الدراسي المسجل به الطالب (مع الربط التلقائي بالصف المختار عند التسجيل)
+  let classEnrollments = await prisma.classEnrollment.findMany({
     where: { studentId: userId },
     include: {
       class: {
@@ -32,6 +34,49 @@ export default async function StudentDashboard() {
       },
     },
   });
+
+  if (classEnrollments.length === 0 && user?.gradeName) {
+    try {
+      let targetClass = await prisma.class.findFirst({
+        where: { name: user.gradeName },
+      });
+      if (!targetClass) {
+        targetClass = await prisma.class.create({
+          data: {
+            name: user.gradeName,
+            gradeLevel: user.gradeLevel || 'ثانوي',
+            gradeNumber: 1,
+            academicYear: '2025-2026',
+            status: 'ACTIVE',
+          },
+        });
+      }
+      await prisma.classEnrollment.create({
+        data: {
+          studentId: user.id,
+          classId: targetClass.id,
+        },
+      });
+      classEnrollments = await prisma.classEnrollment.findMany({
+        where: { studentId: userId },
+        include: {
+          class: {
+            include: {
+              subjects: {
+                include: {
+                  teacher: true,
+                  payments: userId ? { where: { studentId: userId } } : false,
+                  _count: { select: { lectures: true, files: true } },
+                },
+              },
+            },
+          },
+        },
+      });
+    } catch (e) {
+      console.error('Auto enroll in dashboard error:', e);
+    }
+  }
 
   // 3. المواد المدفوعة
   const subjectPayments = await prisma.subjectPayment.findMany({
@@ -63,8 +108,10 @@ export default async function StudentDashboard() {
             <School size={28} />
           </div>
           <div>
-            <div style={{ color: 'var(--muted-foreground)', fontSize: '0.9rem', fontWeight: '600', marginBottom: '0.25rem' }}>الصفوف المسجلة</div>
-            <div style={{ fontSize: '1.75rem', fontWeight: '800', color: 'var(--foreground)' }}>{classEnrollments.length}</div>
+            <div style={{ color: 'var(--muted-foreground)', fontSize: '0.85rem', fontWeight: '600', marginBottom: '0.25rem' }}>صفي الدراسي</div>
+            <div style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0EA5E9', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '170px' }}>
+              {classEnrollments[0]?.class?.name || user?.gradeName || 'مسجل'}
+            </div>
           </div>
         </div>
 

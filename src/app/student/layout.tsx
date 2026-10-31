@@ -27,7 +27,7 @@ export default async function StudentLayout({
 
   const navItems = [
     { name: 'لوحة التحكم', href: '/student', icon: LayoutDashboard },
-    { name: 'صفوفي المدرسية', href: '/student/classes', icon: School },
+    { name: 'صفي الدراسي', href: '/student/classes', icon: School },
     { name: 'دوراتي التدريبية', href: '/student/courses', icon: BookOpen },
     { name: 'الشهادات المعتمدة', href: '/student/certificates', icon: ShieldCheck },
     { name: 'الملف الشخصي', href: '/student/profile', icon: User },

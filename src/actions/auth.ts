@@ -67,6 +67,36 @@ export async function registerAction(formData: FormData) {
       },
     });
 
+    // ربط الطالب تلقائياً بالصف الذي اختاره أثناء التسجيل
+    if (role === 'STUDENT' && gradeName) {
+      try {
+        let targetClass = await prisma.class.findFirst({
+          where: { name: gradeName },
+        });
+
+        if (!targetClass) {
+          targetClass = await prisma.class.create({
+            data: {
+              name: gradeName,
+              gradeLevel: gradeLevel || 'ثانوي',
+              gradeNumber: 1,
+              academicYear: '2025-2026',
+              status: 'ACTIVE',
+            },
+          });
+        }
+
+        await prisma.classEnrollment.create({
+          data: {
+            studentId: user.id,
+            classId: targetClass.id,
+          },
+        });
+      } catch (clsErr) {
+        console.error('Auto class enrollment error:', clsErr);
+      }
+    }
+
     // تسجيل الدخول التلقائي بعد التسجيل
     await setAuthCookie(user.id);
     return { success: true, role: user.role };
