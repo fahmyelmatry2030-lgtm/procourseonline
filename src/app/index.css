@@ -76,6 +76,17 @@
   transform: translateX(-3px);
 }
 
+.instructor-nav-item {
+  color: #CBD5E1 !important;
+  transition: all 0.2s ease !important;
+}
+
+.instructor-nav-item:hover {
+  background: rgba(255, 255, 255, 0.09) !important;
+  color: #FFFFFF !important;
+  transform: translateX(-3px);
+}
+
 .hero-glow {
   position: absolute;
   top: 50%;
