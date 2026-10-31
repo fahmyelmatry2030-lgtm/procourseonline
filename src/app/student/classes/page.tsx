@@ -184,11 +184,11 @@ export default async function StudentClassPage() {
                 </div>
 
                 <Link
-                  href={isPaid ? `/student/subjects/${subject.id}` : `/classes/${currentClass.id}`}
+                  href={isPaid ? `/student/subjects/${subject.id}` : `/payment/subject/${subject.id}`}
                   className={`btn ${isPaid ? 'btn-primary' : 'btn-outline'}`}
                   style={{ width: '100%', padding: '0.75rem', fontSize: '0.9rem', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
                 >
-                  {isPaid ? 'الدخول للمحاضرات' : 'الاشتراك في المادة'} <ArrowLeft size={16} />
+                  {isPaid ? 'الدخول للمحاضرات والواجبات' : 'الاشتراك في المادة وتفعيلها'} <ArrowLeft size={16} />
                 </Link>
               </div>
             );

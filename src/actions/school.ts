@@ -126,8 +126,10 @@ export async function payForSubjectAction(formData: FormData) {
     console.error('Payment Error:', error);
   }
 
-  if (classId) {
-    redirect(`/classes/${classId}`);
+  if (subjectId) {
+    redirect(`/student/subjects/${subjectId}`);
+  } else if (classId) {
+    redirect(`/student/classes`);
   }
 }
 
