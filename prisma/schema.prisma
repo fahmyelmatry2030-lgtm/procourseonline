@@ -30,7 +30,7 @@ model User {
   yearsOfExperience  String?             // سنوات الخبرة
   whatsappPhone      String?             // رقم الواتساب للتواصل
   nationalId         String?             // الرقم القومي (14 رقم)
-  idCardUrl          String?   @db.Text  // رابط أو مسار ملف إثبات الهوية / كارنيه النقابة
+  idCardUrl          String?   @db.LongText  // رابط أو مسار ملف إثبات الهوية / كارنيه النقابة
   isVerifiedTeacher  Boolean             @default(false) // تم التحقق من المعلم
 
   createdAt          DateTime            @default(now())

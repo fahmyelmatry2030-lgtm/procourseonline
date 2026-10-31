@@ -169,18 +169,56 @@ export default function RegisterPage() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      if (file.size > 5 * 1024 * 1024) {
-        setError('حجم الملف كبير جداً. الحد الأقصى المسموح به هو 5 ميجابايت.');
+      if (file.size > 10 * 1024 * 1024) {
+        setError('حجم الملف كبير جداً. الحد الأقصى المسموح به هو 10 ميجابايت.');
         return;
       }
       setIdCardFileName(file.name);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const result = reader.result as string;
-        setIdCardPreview(result);
-        setIdCardBase64(result);
-      };
-      reader.readAsDataURL(file);
+
+      if (file.type.startsWith('image/')) {
+        // ضغط الصورة تلقائياً لتسريع الرفع وتجنب قيود السيرفر
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const MAX_WIDTH = 1200;
+            const MAX_HEIGHT = 1200;
+            let width = img.width;
+            let height = img.height;
+
+            if (width > height) {
+              if (width > MAX_WIDTH) {
+                height = Math.round((height * MAX_WIDTH) / width);
+                width = MAX_WIDTH;
+              }
+            } else {
+              if (height > MAX_HEIGHT) {
+                width = Math.round((width * MAX_HEIGHT) / height);
+                height = MAX_HEIGHT;
+              }
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx?.drawImage(img, 0, 0, width, height);
+            const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.8);
+            setIdCardPreview(compressedDataUrl);
+            setIdCardBase64(compressedDataUrl);
+          };
+          img.src = event.target?.result as string;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const result = reader.result as string;
+          setIdCardPreview(result);
+          setIdCardBase64(result);
+        };
+        reader.readAsDataURL(file);
+      }
     }
   };
 
@@ -231,7 +269,8 @@ export default function RegisterPage() {
       }
     } catch (err: any) {
       console.error('Registration submit error:', err);
-      setError('حدث خطأ أثناء الاتصال بالسيرفر. يرجى المحاولة مرة أخرى.');
+      const detail = err?.message || '';
+      setError(detail ? `حدث خطأ في الاتصال: ${detail}` : 'حدث خطأ أثناء الاتصال بالسيرفر. يرجى المحاولة مرة أخرى.');
       setLoading(false);
     }
   };
@@ -581,7 +620,6 @@ export default function RegisterPage() {
                         <span className="text-[11px] text-slate-400 mt-0.5">صورة JPG أو PNG أو مستند PDF (بحد أقصى 5 ميجابايت)</span>
                         <input 
                           type="file" 
-                          name="idCardFile"
                           accept="image/*,.pdf" 
                           onChange={handleFileChange}
                           className="hidden" 
