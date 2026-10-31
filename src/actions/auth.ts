@@ -10,18 +10,33 @@ export async function registerAction(formData: FormData) {
   const phone = (formData.get('phone') as string)?.trim();
   const email = (formData.get('email') as string)?.trim();
   const password = formData.get('password') as string;
+  const confirmPassword = formData.get('confirmPassword') as string;
   const roleInput = formData.get('role') as string;
   const bio = (formData.get('bio') as string)?.trim();
 
-  // التحقق من نوع الحساب: طالب أو معلم
+  // بيانات الطالب الإضافية
+  const parentPhone = (formData.get('parentPhone') as string)?.trim() || null;
+  const governorate = (formData.get('governorate') as string)?.trim() || null;
+  const gradeLevel = (formData.get('gradeLevel') as string)?.trim() || null;
+  const gradeName = (formData.get('gradeName') as string)?.trim() || null;
+
+  // التحقق من نوع الحساب
   const role = roleInput === 'TEACHER' ? 'TEACHER' : 'STUDENT';
 
   if (!phone || !password || !name) {
     return { error: 'يرجى تعبئة الحقول الإجبارية (الاسم، رقم الهاتف، وكلمة المرور).' };
   }
 
+  if (confirmPassword && password !== confirmPassword) {
+    return { error: 'كلمة المرور وتأكيد كلمة المرور غير متطابقين.' };
+  }
+
+  if (role === 'STUDENT' && !parentPhone) {
+    return { error: 'يرجى إدخال رقم هاتف ولي الأمر لمتابعة الطالب.' };
+  }
+
   try {
-    // Check if user already exists
+    // التحقق من عدم وجود المستخدم مسبقاً
     const existingUser = await prisma.user.findFirst({
       where: {
         OR: [
@@ -45,10 +60,14 @@ export async function registerAction(formData: FormData) {
         password: hashedPassword,
         role: role,
         bio: bio || undefined,
+        parentPhone: parentPhone || undefined,
+        governorate: governorate || undefined,
+        gradeLevel: gradeLevel || undefined,
+        gradeName: gradeName || undefined,
       },
     });
 
-    // Automatically log in after registration
+    // تسجيل الدخول التلقائي بعد التسجيل
     await setAuthCookie(user.id);
     return { success: true, role: user.role };
   } catch (error) {

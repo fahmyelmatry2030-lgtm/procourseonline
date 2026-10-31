@@ -17,6 +17,10 @@ model User {
   name               String?
   bio                String?
   avatar             String?
+  parentPhone        String?             // رقم هاتف ولي الأمر
+  governorate        String?             // المحافظة / المدينة
+  gradeLevel         String?             // المرحلة الدراسية (ابتدائي / إعدادي / ثانوي)
+  gradeName          String?             // اسم الصف الدراسي (مثال: الصف الأول الثانوي)
   role               String              @default("STUDENT") // STUDENT, TEACHER, ADMIN
   createdAt          DateTime            @default(now())
   updatedAt          DateTime            @updatedAt
