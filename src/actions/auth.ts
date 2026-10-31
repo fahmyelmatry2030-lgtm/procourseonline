@@ -6,10 +6,15 @@ import { redirect } from 'next/navigation';
 import bcrypt from 'bcryptjs';
 
 export async function registerAction(formData: FormData) {
-  const name = formData.get('name') as string;
-  const phone = formData.get('phone') as string;
-  const email = formData.get('email') as string;
+  const name = (formData.get('name') as string)?.trim();
+  const phone = (formData.get('phone') as string)?.trim();
+  const email = (formData.get('email') as string)?.trim();
   const password = formData.get('password') as string;
+  const roleInput = formData.get('role') as string;
+  const bio = (formData.get('bio') as string)?.trim();
+
+  // التحقق من نوع الحساب: طالب أو معلم
+  const role = roleInput === 'TEACHER' ? 'TEACHER' : 'STUDENT';
 
   if (!phone || !password || !name) {
     return { error: 'يرجى تعبئة الحقول الإجبارية (الاسم، رقم الهاتف، وكلمة المرور).' };
@@ -38,13 +43,14 @@ export async function registerAction(formData: FormData) {
         phone,
         email: email || undefined,
         password: hashedPassword,
-        role: 'STUDENT',
+        role: role,
+        bio: bio || undefined,
       },
     });
 
     // Automatically log in after registration
     await setAuthCookie(user.id);
-    return { success: true };
+    return { success: true, role: user.role };
   } catch (error) {
     console.error('Registration Error:', error);
     return { error: 'حدث خطأ أثناء التسجيل. يرجى المحاولة لاحقاً.' };
@@ -52,7 +58,7 @@ export async function registerAction(formData: FormData) {
 }
 
 export async function loginWithPasswordAction(formData: FormData) {
-  const phone = formData.get('phone') as string;
+  const phone = (formData.get('phone') as string)?.trim();
   const password = formData.get('password') as string;
 
   if (!phone || !password) {
@@ -60,8 +66,13 @@ export async function loginWithPasswordAction(formData: FormData) {
   }
 
   try {
-    const user = await prisma.user.findUnique({
-      where: { phone },
+    const user = await prisma.user.findFirst({
+      where: {
+        OR: [
+          { phone: phone },
+          { email: phone },
+        ],
+      },
     });
 
     if (!user || !user.password) {
