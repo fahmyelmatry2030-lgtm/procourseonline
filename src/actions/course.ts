@@ -10,7 +10,7 @@ export async function createCourseAction(formData: FormData) {
   if (!userId) return { error: 'غير مصرح لك بهذا الإجراء.' };
 
   const user = await prisma.user.findUnique({ where: { id: userId } });
-  if (!user || user.role !== 'INSTRUCTOR') {
+  if (!user || (user.role !== 'INSTRUCTOR' && user.role !== 'TEACHER')) {
     return { error: 'يجب أن تكون محاضراً لإنشاء دورة.' };
   }
 

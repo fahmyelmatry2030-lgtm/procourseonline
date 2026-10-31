@@ -152,9 +152,9 @@ export default async function InstructorsPage({
     ...dbTeachers.map((teach) => ({
       id: teach.id,
       name: teach.name || teach.phone,
-      bio: teach.bio || 'معلم متخصص في تدريس المناهج الدراسية ومتابعة الطلاب خطوة بخطوة.',
+      bio: teach.bio || (teach.jobTitle ? `${teach.jobTitle} - خبرة ${teach.yearsOfExperience || 'ممتازة'}` : 'معلم متخصص في تدريس المناهج الدراسية ومتابعة الطلاب خطوة بخطوة.'),
       role: 'TEACHER',
-      specialty: teach.subjects?.[0]?.name ? `مادة ${teach.subjects[0].name}` : 'مناهج دراسية',
+      specialty: teach.subjectSpecialty || (teach.subjects?.[0]?.name ? `مادة ${teach.subjects[0].name}` : 'مناهج دراسية'),
       subjectCount: teach.subjects?.length || 1,
       totalStudents: 340,
       rating: 4.9,

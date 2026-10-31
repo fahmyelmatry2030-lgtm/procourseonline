@@ -21,7 +21,7 @@ export default async function InstructorLayout({
     where: { id: userId },
   });
 
-  if (!user || user.role !== 'INSTRUCTOR') {
+  if (!user || (user.role !== 'INSTRUCTOR' && user.role !== 'TEACHER')) {
     redirect('/login');
   }
 
