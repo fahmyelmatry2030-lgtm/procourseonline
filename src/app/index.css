@@ -1,9 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap');
 @import "tailwindcss";
 
+:root {
+  --background: #F8FAFC;
+  --card: #FFFFFF;
+  --border: #E2E8F0;
+  --foreground: #0F172A;
+  --muted: #F1F5F9;
+  --muted-foreground: #64748B;
+  --primary: #0EA5E9;
+  --secondary: #F97316;
+  --danger: #EF4444;
+  --radius-sm: 10px;
+}
+
 @layer base {
   body {
-    background-color: #F8FAFF;
+    background-color: #F8FAFC;
     color: #334155;
     font-family: 'Tajawal', sans-serif;
     direction: rtl;
@@ -43,6 +56,24 @@
     @apply inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-bold bg-white text-[#0EA5E9];
     box-shadow: 0 4px 12px rgba(14,165,233,0.10);
   }
+}
+
+.saas-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 18px;
+  box-shadow: 0 4px 20px -4px rgba(15, 23, 42, 0.05);
+}
+
+.student-nav-item {
+  color: #CBD5E1 !important;
+  transition: all 0.2s ease !important;
+}
+
+.student-nav-item:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #FFFFFF !important;
+  transform: translateX(-3px);
 }
 
 .hero-glow {
