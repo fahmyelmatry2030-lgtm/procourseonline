@@ -1,7 +1,7 @@
 import prisma from '@/lib/prisma';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
-import { BookOpen, GraduationCap, ArrowLeft, PlayCircle, Star, TrendingUp, Award, School } from 'lucide-react';
+import { BookOpen, GraduationCap, ArrowLeft, PlayCircle, Star, TrendingUp, Award, School, Calendar, ClipboardCheck, Video, Clock } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
 
@@ -143,6 +143,83 @@ export default async function StudentDashboard() {
             <div style={{ color: 'rgba(255,255,255,0.85)', fontSize: '0.9rem', fontWeight: '600', marginBottom: '0.25rem' }}>نقاط التفاعل</div>
             <div style={{ fontSize: '1.75rem', fontWeight: '800' }}>{150 + (subjectPayments.length * 50)}</div>
           </div>
+        </div>
+
+      </div>
+
+      {/* قسم المواعيد والمهام العاجلة */}
+      <div className="grid grid-cols-1 lg:grid-cols-2" style={{ gap: '1.5rem', marginBottom: '3rem' }}>
+        
+        {/* الحصة القادمة */}
+        <div className="saas-card" style={{ padding: '1.75rem', background: 'linear-gradient(135deg, rgba(14,165,233,0.08) 0%, rgba(27,43,94,0.03) 100%)', border: '1px solid rgba(14,165,233,0.2)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <span style={{ display: 'inline-block', width: '8px', height: '8px', borderRadius: '50%', background: '#EF4444', animation: 'pulse 1.5s infinite' }}></span>
+                <span style={{ fontSize: '0.8rem', fontWeight: '800', color: '#EF4444' }}>حصتك المباشرة القادمة</span>
+              </div>
+              <Link href="/student/schedule" style={{ fontSize: '0.8rem', color: '#0EA5E9', fontWeight: '700', textDecoration: 'none' }}>
+                عرض الجدول الأسبوعي ←
+              </Link>
+            </div>
+
+            <h3 style={{ fontSize: '1.25rem', fontWeight: '800', margin: '0 0 0.5rem 0' }}>
+              مراجعة النحو واللغة العربية — بث تفاعلي
+            </h3>
+            <div style={{ display: 'flex', gap: '1rem', fontSize: '0.85rem', color: 'var(--muted-foreground)', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
+              <span>👨‍🏫 أ. محمود سامي</span>
+              <span>•</span>
+              <span>⏰ اليوم 05:00 م</span>
+              <span>•</span>
+              <span>⏱️ 90 دقيقة</span>
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', gap: '0.75rem' }}>
+            <a href="https://meet.google.com" target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ flex: 1, padding: '0.65rem 1rem', fontSize: '0.9rem', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem' }}>
+              <Video size={16} /> دخول البث المباشر
+            </a>
+            <Link href="/student/schedule" className="btn btn-outline" style={{ padding: '0.65rem 1rem', fontSize: '0.9rem' }}>
+              <Calendar size={16} />
+            </Link>
+          </div>
+        </div>
+
+        {/* الواجبات والامتحانات المستحقة */}
+        <div className="saas-card" style={{ padding: '1.75rem', background: 'linear-gradient(135deg, rgba(249,115,22,0.08) 0%, rgba(27,43,94,0.03) 100%)', border: '1px solid rgba(249,115,22,0.2)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <ClipboardCheck size={16} color="#F97316" />
+                <span style={{ fontSize: '0.8rem', fontWeight: '800', color: '#F97316' }}>مهام واختبارات مستحقة</span>
+              </div>
+              <Link href="/student/assignments" style={{ fontSize: '0.8rem', color: '#F97316', fontWeight: '700', textDecoration: 'none' }}>
+                عرض الكل ←
+              </Link>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.5rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--card)', padding: '0.6rem 0.9rem', borderRadius: '10px', border: '1px solid var(--border)' }}>
+                <div>
+                  <div style={{ fontSize: '0.9rem', fontWeight: '700' }}>امتحان التقييم الأسبوعي (نحو وبلاغة)</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>اللغة العربية • متبقي يومين</div>
+                </div>
+                <span style={{ fontSize: '0.75rem', fontWeight: '800', padding: '0.15rem 0.5rem', borderRadius: '9999px', background: 'rgba(16,185,129,0.12)', color: '#10B981' }}>متاح الآن</span>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--card)', padding: '0.6rem 0.9rem', borderRadius: '10px', border: '1px solid var(--border)' }}>
+                <div>
+                  <div style={{ fontSize: '0.9rem', fontWeight: '700' }}>واجب تدريبات كان وأخواتها</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>تسليم قبل الأحد 10:00 م</div>
+                </div>
+                <span style={{ fontSize: '0.75rem', fontWeight: '800', padding: '0.15rem 0.5rem', borderRadius: '9999px', background: 'rgba(239,68,68,0.1)', color: '#EF4444' }}>مطلوب</span>
+              </div>
+            </div>
+          </div>
+
+          <Link href="/student/assignments" className="btn btn-outline" style={{ padding: '0.65rem 1rem', fontSize: '0.9rem', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem', color: '#F97316', borderColor: 'rgba(249,115,22,0.3)' }}>
+            <ClipboardCheck size={16} /> فتح صفحة الامتحانات والواجبات
+          </Link>
         </div>
 
       </div>

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { BookOpen, User, ShieldCheck, LogOut, LayoutDashboard, Settings, Bell, School } from 'lucide-react';
+import { BookOpen, User, ShieldCheck, LogOut, LayoutDashboard, Settings, Bell, School, Calendar, ClipboardCheck } from 'lucide-react';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import prisma from '@/lib/prisma';
@@ -28,6 +28,8 @@ export default async function StudentLayout({
   const navItems = [
     { name: 'لوحة التحكم', href: '/student', icon: LayoutDashboard },
     { name: 'صفي الدراسي', href: '/student/classes', icon: School },
+    { name: 'جدول الحصص والمواعيد', href: '/student/schedule', icon: Calendar },
+    { name: 'الامتحانات والواجبات', href: '/student/assignments', icon: ClipboardCheck },
     { name: 'دوراتي التدريبية', href: '/student/courses', icon: BookOpen },
     { name: 'الشهادات المعتمدة', href: '/student/certificates', icon: ShieldCheck },
     { name: 'الملف الشخصي', href: '/student/profile', icon: User },
