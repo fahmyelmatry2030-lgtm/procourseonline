@@ -23,7 +23,7 @@ export default function LoginPage() {
       setError(res.error);
       setLoading(false);
     } else {
-      if (res.role === 'INSTRUCTOR') router.push('/instructor');
+      if (res.role === 'INSTRUCTOR' || res.role === 'TEACHER') router.push('/instructor');
       else if (res.role === 'ADMIN') router.push('/admin');
       else router.push('/student');
     }
@@ -33,16 +33,16 @@ export default function LoginPage() {
     <div className="min-h-screen flex bg-[#F8FAFF]">
       
       {/* Right Side - Form */}
-      <div className="flex-1 flex flex-col justify-center px-4 sm:px-6 lg:flex-none lg:w-[50%] xl:w-[40%] lg:px-20 relative z-10">
+      <div className="flex-1 flex flex-col justify-center px-4 sm:px-6 lg:flex-none lg:w-[50%] xl:w-[40%] lg:px-20 relative z-10 py-12">
         
         <div className="mx-auto w-full max-w-sm lg:max-w-md">
           <div className="mb-10">
             <Link href="/" className="inline-flex items-center gap-2 text-slate-500 hover:text-[#0EA5E9] transition-colors mb-8 font-medium text-sm">
-              <ArrowRight size={16} /> ?????? ????????
+              <ArrowRight size={16} /> العودة للرئيسية
             </Link>
             
-            <h2 className="text-3xl md:text-4xl font-black text-slate-800 mb-3">?????? ??????! ??</h2>
-            <p className="text-slate-500 font-medium">?? ?????? ?????? ??????? ????? ?????????</p>
+            <h2 className="text-3xl md:text-4xl font-black text-[#1B2B5E] mb-3">مرحباً بعودتك! 👋</h2>
+            <p className="text-slate-500 font-medium">قم بتسجيل الدخول لمتابعة رحلتك التعليمية</p>
           </div>
 
           <div className="friendly-card p-8 border border-slate-100">
@@ -55,12 +55,12 @@ export default function LoginPage() {
 
             <form onSubmit={handleLogin} className="space-y-6">
               <div>
-                <label className="block text-sm font-bold text-slate-700 mb-2">??? ?????? ?? ?????? ??????????</label>
+                <label className="block text-sm font-bold text-slate-700 mb-2">رقم الهاتف أو البريد الإلكتروني</label>
                 <div className="relative">
                   <input 
                     type="text" 
                     name="phone"
-                    placeholder="???? ????? ?? ??? ?????"
+                    placeholder="أدخل بريدك أو رقم هاتفك"
                     className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-medium text-slate-700 focus:border-[#0EA5E9] focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-100 transition-all"
                     required 
                   />
@@ -69,13 +69,13 @@ export default function LoginPage() {
 
               <div>
                 <div className="flex justify-between items-center mb-2">
-                  <label className="block text-sm font-bold text-slate-700">???? ??????</label>
-                  <Link href="#" className="text-sm font-bold text-[#0EA5E9] hover:underline">???? ???????</Link>
+                  <label className="block text-sm font-bold text-slate-700">كلمة المرور</label>
+                  <Link href="#" className="text-sm font-bold text-[#0EA5E9] hover:underline">نسيت الكلمة؟</Link>
                 </div>
                 <input 
                   type="password" 
                   name="password"
-                  placeholder="��������"
+                  placeholder="••••••••"
                   className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-medium text-slate-700 focus:border-[#0EA5E9] focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-100 transition-all"
                   required 
                   dir="ltr"
@@ -90,11 +90,11 @@ export default function LoginPage() {
                 {loading ? (
                   <span className="flex items-center gap-2">
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                    ???? ??????...
+                    جاري الدخول...
                   </span>
                 ) : (
                   <>
-                    <LogIn size={20} /> ????? ??????
+                    <LogIn size={20} /> تسجيل الدخول
                   </>
                 )}
               </button>
@@ -102,42 +102,42 @@ export default function LoginPage() {
           </div>
 
           <p className="mt-8 text-center text-slate-500 font-medium">
-            ??? ???? ???? ????{' '}
+            ليس لديك حساب بعد؟{' '}
             <Link href="/register" className="font-bold text-[#0EA5E9] hover:underline">
-              ???? ?????? ???????
+              أنشئ حساباً مجانياً
             </Link>
           </p>
         </div>
       </div>
 
       {/* Left Side - Graphic */}
-      <div className="hidden lg:block relative flex-1 bg-gradient-to-br from-[#0EA5E9] to-[#0369A1] overflow-hidden rounded-r-[3rem] shadow-2xl my-4 mr-4">
+      <div className="hidden lg:block relative flex-1 bg-gradient-to-br from-[#0EA5E9] to-[#1B2B5E] overflow-hidden rounded-r-[3rem] shadow-2xl my-4 mr-4">
         {/* Background Patterns */}
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_2px_2px,white_1px,transparent_0)] bg-[length:32px_32px]"></div>
         <div className="absolute -top-40 -right-40 w-96 h-96 bg-white/20 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-teal-400/30 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-sky-400/30 rounded-full blur-3xl"></div>
 
         <div className="absolute inset-0 flex flex-col justify-center items-center text-white p-12 text-center">
           <div className="w-24 h-24 bg-white/10 backdrop-blur-md rounded-3xl flex items-center justify-center mb-8 border border-white/20 shadow-xl relative">
-            <div className="absolute -top-3 -right-3 w-8 h-8 bg-teal-400 rounded-full flex items-center justify-center animate-bounce">
+            <div className="absolute -top-3 -right-3 w-8 h-8 bg-amber-400 rounded-full flex items-center justify-center animate-bounce">
               <Sparkles size={16} className="text-white" />
             </div>
             <ShieldCheck size={48} className="text-white" />
           </div>
           
-          <h2 className="text-4xl lg:text-5xl font-black mb-6 leading-tight">?????? ?? ??????? <br/><span className="text-sky-200">?????? ?????!</span></h2>
+          <h2 className="text-4xl lg:text-5xl font-black mb-6 leading-tight">استثمر في مستقبلك <br/><span className="text-sky-200">التعليمي والمهني اليوم!</span></h2>
           <p className="text-lg lg:text-xl text-white/80 font-medium max-w-lg leading-relaxed">
-            ???? ????? ?????? ???????? ????? ??????? ??????? ?????? ???????? ?????? ?? ???? ?????? ????????? ???????.
+            انضم لآلاف الطلاب والخبراء الذين يشاركون المعرفة ويبنون مستقبلاً مشرقاً من خلال منصة ProCourse Online التعليمية الرائدة.
           </p>
 
           <div className="mt-12 flex flex-col items-center gap-4">
             <div className="flex -space-x-4 space-x-reverse">
-              <div className="w-12 h-12 rounded-full border-2 border-[#0369A1] bg-emerald-400 z-30"></div>
-              <div className="w-12 h-12 rounded-full border-2 border-[#0369A1] bg-amber-400 z-20"></div>
-              <div className="w-12 h-12 rounded-full border-2 border-[#0369A1] bg-sky-400 z-10"></div>
-              <div className="w-12 h-12 rounded-full border-2 border-[#0369A1] bg-pink-400 flex items-center justify-center font-bold text-sm">+10k</div>
+              <div className="w-12 h-12 rounded-full border-2 border-[#1B2B5E] bg-emerald-400 z-30"></div>
+              <div className="w-12 h-12 rounded-full border-2 border-[#1B2B5E] bg-amber-400 z-20"></div>
+              <div className="w-12 h-12 rounded-full border-2 border-[#1B2B5E] bg-sky-400 z-10"></div>
+              <div className="w-12 h-12 rounded-full border-2 border-[#1B2B5E] bg-pink-400 flex items-center justify-center font-bold text-sm">+10k</div>
             </div>
-            <span className="text-white/80 font-bold text-sm">????? ??? ??? ProCourse Online</span>
+            <span className="text-white/80 font-bold text-sm">متدرب نشط على ProCourse Online</span>
           </div>
         </div>
       </div>
@@ -145,4 +145,3 @@ export default function LoginPage() {
     </div>
   );
 }
-

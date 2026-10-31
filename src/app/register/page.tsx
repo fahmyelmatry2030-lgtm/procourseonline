@@ -36,11 +36,11 @@ export default function RegisterPage() {
         <div className="mx-auto w-full max-w-sm lg:max-w-md">
           <div className="mb-10">
             <Link href="/" className="inline-flex items-center gap-2 text-slate-500 hover:text-[#0EA5E9] transition-colors mb-8 font-medium text-sm">
-              <ArrowRight size={16} /> ?????? ????????
+              <ArrowRight size={16} /> العودة للرئيسية
             </Link>
             
-            <h2 className="text-3xl md:text-4xl font-black text-slate-800 mb-3">???? ????? ???? ??</h2>
-            <p className="text-slate-500 font-medium">???? ????? ????? ?? ???? ?? ??????? ????????</p>
+            <h2 className="text-3xl md:text-4xl font-black text-[#1B2B5E] mb-3">أنشئ حسابك الآن 🚀</h2>
+            <p className="text-slate-500 font-medium">خطوة واحدة تفصلك عن عالم من المعرفة والتطوير</p>
           </div>
 
           <div className="friendly-card p-8 border border-slate-100">
@@ -53,12 +53,12 @@ export default function RegisterPage() {
 
             <form onSubmit={handleRegister} className="space-y-5">
               <div>
-                <label className="block text-sm font-bold text-slate-700 mb-2">????? ?????? <span className="text-red-500">*</span></label>
+                <label className="block text-sm font-bold text-slate-700 mb-2">الاسم الكامل <span className="text-red-500">*</span></label>
                 <div className="relative">
                   <input 
                     type="text" 
                     name="name"
-                    placeholder="????: ???? ?????"
+                    placeholder="مثال: أحمد محمود"
                     className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-medium text-slate-700 focus:border-[#0EA5E9] focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-100 transition-all"
                     required 
                   />
@@ -66,7 +66,7 @@ export default function RegisterPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-bold text-slate-700 mb-2">??? ?????? <span className="text-red-500">*</span></label>
+                <label className="block text-sm font-bold text-slate-700 mb-2">رقم الهاتف <span className="text-red-500">*</span></label>
                 <div className="relative">
                   <input 
                     type="tel" 
@@ -80,7 +80,7 @@ export default function RegisterPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-bold text-slate-700 mb-2">?????? ?????????? <span className="text-slate-400 font-normal">(???????)</span></label>
+                <label className="block text-sm font-bold text-slate-700 mb-2">البريد الإلكتروني <span className="text-slate-400 font-normal">(اختياري)</span></label>
                 <div className="relative">
                   <input 
                     type="email" 
@@ -93,11 +93,11 @@ export default function RegisterPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-bold text-slate-700 mb-2">???? ?????? <span className="text-red-500">*</span></label>
+                <label className="block text-sm font-bold text-slate-700 mb-2">كلمة المرور <span className="text-red-500">*</span></label>
                 <input 
                   type="password" 
                   name="password"
-                  placeholder="��������"
+                  placeholder="••••••••"
                   className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-medium text-slate-700 focus:border-[#0EA5E9] focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-100 transition-all"
                   required 
                   dir="ltr"
@@ -112,11 +112,11 @@ export default function RegisterPage() {
                 {loading ? (
                   <span className="flex items-center gap-2">
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                    ???? ????? ??????...
+                    جاري إنشاء الحساب...
                   </span>
                 ) : (
                   <>
-                    <UserPlus size={20} /> ????? ???? ????
+                    <UserPlus size={20} /> إنشاء حساب جديد
                   </>
                 )}
               </button>
@@ -124,9 +124,9 @@ export default function RegisterPage() {
           </div>
 
           <p className="mt-8 text-center text-slate-500 font-medium">
-            ???? ???? ???????{' '}
+            لديك حساب بالفعل؟{' '}
             <Link href="/login" className="font-bold text-[#0EA5E9] hover:underline">
-              ?? ?????? ??????
+              قم بتسجيل الدخول
             </Link>
           </p>
         </div>
@@ -147,23 +147,23 @@ export default function RegisterPage() {
             <BookOpen size={48} className="text-white" />
           </div>
           
-          <h2 className="text-4xl lg:text-5xl font-black mb-6 leading-tight">???? ???? <br/><span className="text-orange-200">???? ???</span></h2>
+          <h2 className="text-4xl lg:text-5xl font-black mb-6 leading-tight">رحلة تعلم <br/><span className="text-orange-200">تبدأ هنا</span></h2>
           <p className="text-lg lg:text-xl text-white/90 font-medium max-w-lg leading-relaxed">
-            ?????? ??? ???? ??????? ????????? ???????? ????????? ??????? ?????? ????? ?? ???? ????????? ?? ????? ??????.
+            الوصول إلى مئات الدورات التدريبية المباشرة والمسجلة والمواد المدرسية، واكتساب مهارات جديدة مع أفضل المعلمين والمحاضرين.
           </p>
 
           <div className="mt-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6 text-right max-w-sm w-full">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-emerald-400 flex items-center justify-center font-bold">?</div>
-              <p className="font-bold">????? ?????? ??????</p>
+              <div className="w-10 h-10 rounded-full bg-emerald-400 flex items-center justify-center font-bold">✔</div>
+              <p className="font-bold">دورات ومناهج معتمدة وموثقة</p>
             </div>
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-emerald-400 flex items-center justify-center font-bold">?</div>
-              <p className="font-bold">????? ????? ?? ???????</p>
+              <div className="w-10 h-10 rounded-full bg-emerald-400 flex items-center justify-center font-bold">✔</div>
+              <p className="font-bold">تفاعل مباشر مع المعلمين والمحاضرين</p>
             </div>
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-emerald-400 flex items-center justify-center font-bold">?</div>
-              <p className="font-bold">?????? ???? ??????</p>
+              <div className="w-10 h-10 rounded-full bg-emerald-400 flex items-center justify-center font-bold">✔</div>
+              <p className="font-bold">وصول دائم للمحاضرات والملخصات</p>
             </div>
           </div>
         </div>
@@ -172,4 +172,3 @@ export default function RegisterPage() {
     </div>
   );
 }
-
