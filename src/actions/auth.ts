@@ -70,9 +70,12 @@ export async function registerAction(formData: FormData) {
     // تسجيل الدخول التلقائي بعد التسجيل
     await setAuthCookie(user.id);
     return { success: true, role: user.role };
-  } catch (error) {
+  } catch (error: any) {
     console.error('Registration Error:', error);
-    return { error: 'حدث خطأ أثناء التسجيل. يرجى المحاولة لاحقاً.' };
+    const msg = error?.message?.includes('Can\'t reach database server') || error?.message?.includes('connection')
+      ? 'تعذر الاتصال بقاعدة البيانات. يرجى مراجعة إعدادات الاتصال.'
+      : 'حدث خطأ أثناء التسجيل. يرجى المحاولة لاحقاً.';
+    return { error: msg };
   }
 }
 

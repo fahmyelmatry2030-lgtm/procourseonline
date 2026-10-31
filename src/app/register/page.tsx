@@ -84,17 +84,23 @@ export default function RegisterPage() {
       formData.set('gradeName', selectedGrade);
     }
 
-    const res = await registerAction(formData);
+    try {
+      const res = await registerAction(formData);
 
-    if (res.error) {
-      setError(res.error);
-      setLoading(false);
-    } else {
-      if (res.role === 'TEACHER' || res.role === 'INSTRUCTOR') {
-        router.push('/instructor');
+      if (res?.error) {
+        setError(res.error);
+        setLoading(false);
       } else {
-        router.push('/student');
+        if (res?.role === 'TEACHER' || res?.role === 'INSTRUCTOR') {
+          router.push('/instructor');
+        } else {
+          router.push('/student');
+        }
       }
+    } catch (err: any) {
+      console.error('Registration submit error:', err);
+      setError('حدث خطأ أثناء الاتصال بالسيرفر. يرجى المحاولة مرة أخرى.');
+      setLoading(false);
     }
   };
 
