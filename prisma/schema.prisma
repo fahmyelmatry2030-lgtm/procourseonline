@@ -22,6 +22,17 @@ model User {
   gradeLevel         String?             // المرحلة الدراسية (ابتدائي / إعدادي / ثانوي)
   gradeName          String?             // اسم الصف الدراسي (مثال: الصف الأول الثانوي)
   role               String              @default("STUDENT") // STUDENT, TEACHER, ADMIN
+
+  // بيانات المعلم / المحاضر وإثبات الهوية
+  subjectSpecialty   String?             // المادة الأساسية / التخصص
+  teachingStages     String?             // المراحل التي يدرسها (ابتدائي / إعدادي / ثانوي / جامعي)
+  jobTitle           String?             // المسمى الوظيفي (معلم أول / خبير / موجه / محاضر)
+  yearsOfExperience  String?             // سنوات الخبرة
+  whatsappPhone      String?             // رقم الواتساب للتواصل
+  nationalId         String?             // الرقم القومي (14 رقم)
+  idCardUrl          String?   @db.Text  // رابط أو مسار ملف إثبات الهوية / كارنيه النقابة
+  isVerifiedTeacher  Boolean             @default(false) // تم التحقق من المعلم
+
   createdAt          DateTime            @default(now())
   updatedAt          DateTime            @updatedAt
 
