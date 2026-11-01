@@ -35,7 +35,7 @@ export function AdminSidebarNav({ pendingTeachersCount }: AdminNavProps) {
     { name: 'سجل الطلاب', href: '/admin/students', icon: GraduationCap },
     { name: 'الصفوف والمواد المدرسية', href: '/admin/classes', icon: School },
     { name: 'الدورات التدريبية', href: '/admin/courses', icon: BookOpen },
-    { name: 'الاشتراكات والمدفوعات', href: '/admin/payments', icon: CreditCard },
+    { name: 'حسابات المنصة والمالية', href: '/admin/payments', icon: CreditCard },
     { name: 'الملف الشخصي للإدارة', href: '/admin/profile', icon: User },
     { name: 'إعدادات المنصة', href: '/admin/settings', icon: Settings },
   ];
