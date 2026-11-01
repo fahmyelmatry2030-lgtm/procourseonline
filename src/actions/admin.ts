@@ -3,6 +3,7 @@
 import prisma from '@/lib/prisma';
 import { cookies } from 'next/headers';
 import { revalidatePath } from 'next/cache';
+import bcrypt from 'bcryptjs';
 
 async function checkAdmin() {
   const cookieStore = await cookies();
@@ -86,3 +87,45 @@ export async function deleteTeacherAction(teacherId: string) {
     return { error: 'حدث خطأ أثناء حذف الحساب.' };
   }
 }
+
+export async function updateAdminProfileAction(formData: FormData) {
+  const admin = await checkAdmin();
+  if (!admin) return { error: 'غير مصرح لك بهذا الإجراء.' };
+
+  const name = (formData.get('name') as string)?.trim();
+  const phone = (formData.get('phone') as string)?.trim();
+  const email = (formData.get('email') as string)?.trim();
+  const newPassword = formData.get('newPassword') as string;
+
+  if (!name || !phone) {
+    return { error: 'الاسم ورقم الهاتف مطلوبان.' };
+  }
+
+  const updateData: any = {
+    name,
+    phone,
+    email: email || null,
+  };
+
+  if (newPassword && newPassword.trim()) {
+    if (newPassword.length < 6) {
+      return { error: 'كلمة المرور الجديدة يجب ألا تقل عن 6 أحرف.' };
+    }
+    const hashed = await bcrypt.hash(newPassword, 10);
+    updateData.password = hashed;
+  }
+
+  try {
+    await prisma.user.update({
+      where: { id: admin.id },
+      data: updateData,
+    });
+    revalidatePath('/admin');
+    revalidatePath('/admin/profile');
+    return { success: true };
+  } catch (err: any) {
+    console.error('Update admin profile error:', err);
+    return { error: 'حدث خطأ أثناء حفظ التعديلات.' };
+  }
+}
+

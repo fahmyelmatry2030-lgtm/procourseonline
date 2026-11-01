@@ -65,18 +65,40 @@ export default async function AdminLayout({
           </div>
         </div>
 
-        {/* Admin Profile Summary */}
-        <div style={{ margin: '1.25rem 1rem', padding: '1rem', background: 'rgba(255, 255, 255, 0.06)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '14px', display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
-          <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: 'linear-gradient(135deg, #EF4444 0%, #B91C1C 100%)', color: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '800', fontSize: '1.15rem', boxShadow: '0 4px 14px rgba(239, 68, 68, 0.4)', flexShrink: 0 }}>
-            <Shield size={22} />
-          </div>
-          <div style={{ overflow: 'hidden' }}>
-            <div style={{ fontWeight: '800', fontSize: '0.92rem', color: '#FFFFFF', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
-              {user.name || 'مدير المنصة'}
+        {/* Admin Profile Summary Link */}
+        <Link 
+          href="/admin/profile"
+          style={{ 
+            margin: '1.25rem 1rem 0.75rem 1rem', 
+            padding: '0.85rem 1rem', 
+            background: 'rgba(255, 255, 255, 0.06)', 
+            border: '1px solid rgba(255, 255, 255, 0.1)', 
+            borderRadius: '14px', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'space-between',
+            gap: '0.75rem',
+            textDecoration: 'none',
+            transition: 'all 0.2s ease',
+          }}
+          className="hover:bg-white/10 group"
+          title="عرض وتعديل الملف الشخصي"
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', overflow: 'hidden' }}>
+            <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'linear-gradient(135deg, #EF4444 0%, #B91C1C 100%)', color: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '800', fontSize: '1.1rem', boxShadow: '0 4px 14px rgba(239, 68, 68, 0.4)', flexShrink: 0 }}>
+              <Shield size={20} />
             </div>
-            <div style={{ fontSize: '0.78rem', color: '#94A3B8' }}>{user.phone}</div>
+            <div style={{ overflow: 'hidden' }}>
+              <div style={{ fontWeight: '800', fontSize: '0.88rem', color: '#FFFFFF', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                {user.name || 'مدير المنصة'}
+              </div>
+              <div style={{ fontSize: '0.75rem', color: '#94A3B8' }}>{user.phone}</div>
+            </div>
           </div>
-        </div>
+          <span className="text-[10px] font-bold bg-white/10 px-2 py-0.5 rounded-md text-slate-300 group-hover:text-white transition-colors">
+            تعديل
+          </span>
+        </Link>
 
         {/* Navigation */}
         <AdminSidebarNav pendingTeachersCount={pendingTeachersCount} />
@@ -136,13 +158,13 @@ export default async function AdminLayout({
             )}
           </div>
 
-          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
             <Link 
               href="/admin/classes/new" 
               className="btn btn-primary" 
               style={{ 
-                padding: '0.55rem 1.25rem', 
-                fontSize: '0.88rem', 
+                padding: '0.55rem 1.15rem', 
+                fontSize: '0.85rem', 
                 borderRadius: '12px', 
                 background: '#0EA5E9', 
                 borderColor: '#0EA5E9', 
@@ -153,13 +175,59 @@ export default async function AdminLayout({
             >
               + إضافة صف أو مادة
             </Link>
+
             <div style={{ width: '1px', height: '24px', background: '#E2E8F0' }}></div>
-            <button style={{ width: '40px', height: '40px', borderRadius: '12px', border: '1px solid #E2E8F0', background: '#F8FAFC', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', position: 'relative' }}>
-              <Bell size={18} color="#64748B" />
-              {pendingTeachersCount > 0 && (
-                <span style={{ position: 'absolute', top: '9px', right: '10px', width: '8px', height: '8px', background: '#EF4444', borderRadius: '50%' }}></span>
-              )}
-            </button>
+
+            {/* Direct Platform Settings Shortcut */}
+            <Link 
+              href="/admin/settings"
+              style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '0.45rem', 
+                padding: '0.5rem 0.85rem', 
+                borderRadius: '12px', 
+                border: '1px solid #E2E8F0', 
+                background: '#F8FAFC', 
+                color: '#1B2B5E', 
+                fontWeight: '700', 
+                fontSize: '0.82rem', 
+                textDecoration: 'none' 
+              }}
+              className="hover:bg-slate-100 transition-colors shadow-xs"
+              title="إعدادات المنصة"
+            >
+              <Settings size={16} className="text-[#0EA5E9]" />
+              <span>إعدادات المنصة</span>
+            </Link>
+
+            {/* Direct Admin Profile Shortcut */}
+            <Link 
+              href="/admin/profile"
+              style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '0.6rem', 
+                padding: '0.4rem 0.85rem', 
+                borderRadius: '12px', 
+                border: '1px solid #E2E8F0', 
+                background: '#FFFFFF', 
+                color: '#1B2B5E', 
+                fontWeight: '700', 
+                fontSize: '0.82rem', 
+                textDecoration: 'none' 
+              }}
+              className="hover:bg-slate-50 hover:border-slate-300 transition-all shadow-xs"
+              title="الملف الشخصي للإدارة"
+            >
+              <div style={{ width: '32px', height: '32px', borderRadius: '10px', background: 'linear-gradient(135deg, #EF4444 0%, #B91C1C 100%)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '800', fontSize: '0.85rem' }}>
+                <Shield size={16} />
+              </div>
+              <div className="text-right">
+                <div style={{ fontSize: '0.82rem', lineHeight: '1.2' }}>{user.name || 'مدير المنصة'}</div>
+                <div style={{ fontSize: '0.68rem', color: '#64748B' }}>الملف الشخصي</div>
+              </div>
+            </Link>
           </div>
         </header>
 

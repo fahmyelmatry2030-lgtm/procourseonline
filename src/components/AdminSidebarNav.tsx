@@ -10,7 +10,9 @@ import {
   School, 
   BookOpen, 
   CreditCard,
-  ShieldAlert
+  ShieldAlert,
+  User,
+  Settings
 } from 'lucide-react';
 
 interface AdminNavProps {
@@ -34,10 +36,12 @@ export function AdminSidebarNav({ pendingTeachersCount }: AdminNavProps) {
     { name: 'الصفوف والمواد المدرسية', href: '/admin/classes', icon: School },
     { name: 'الدورات التدريبية', href: '/admin/courses', icon: BookOpen },
     { name: 'الاشتراكات والمدفوعات', href: '/admin/payments', icon: CreditCard },
+    { name: 'الملف الشخصي للإدارة', href: '/admin/profile', icon: User },
+    { name: 'إعدادات المنصة', href: '/admin/settings', icon: Settings },
   ];
 
   return (
-    <nav style={{ padding: '0.5rem 1rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.4rem', overflowY: 'auto' }}>
+    <nav style={{ padding: '0.4rem 0.85rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.25rem', overflowY: 'auto' }}>
       {navItems.map((item) => {
         const isActive = item.href === '/admin'
           ? pathname === '/admin'
@@ -53,10 +57,10 @@ export function AdminSidebarNav({ pendingTeachersCount }: AdminNavProps) {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              padding: '0.8rem 1rem',
+              padding: '0.62rem 0.85rem',
               borderRadius: '12px',
               fontWeight: isActive ? '800' : '600',
-              fontSize: '0.92rem',
+              fontSize: '0.88rem',
               textDecoration: 'none',
               transition: 'all 0.2s ease',
               background: isActive 
@@ -70,9 +74,9 @@ export function AdminSidebarNav({ pendingTeachersCount }: AdminNavProps) {
             }}
             className="hover:bg-white/10"
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
               <Icon 
-                size={19} 
+                size={18} 
                 color={isActive ? '#F87171' : '#94A3B8'} 
                 style={{ flexShrink: 0 }} 
               />
