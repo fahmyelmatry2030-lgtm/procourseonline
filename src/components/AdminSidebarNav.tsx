@@ -26,13 +26,12 @@ export function AdminSidebarNav({ pendingTeachersCount }: AdminNavProps) {
   const navItems = [
     { name: 'اللوحة الرئيسية', href: '/admin', icon: LayoutDashboard },
     { 
-      name: 'طلبات اعتماد المعلمين', 
-      href: '/admin/teachers/pending', 
-      icon: UserCheck, 
+      name: 'دليل واعتماد المعلمين', 
+      href: '/admin/teachers', 
+      icon: Users, 
       badge: pendingTeachersCount > 0 ? pendingTeachersCount : undefined,
       badgeColor: 'bg-amber-500 text-slate-950 font-black animate-pulse'
     },
-    { name: 'دليل المعلمين', href: '/admin/teachers', icon: Users },
     { name: 'سجل الطلاب', href: '/admin/students', icon: GraduationCap },
     { name: 'الصفوف والمواد المدرسية', href: '/admin/classes', icon: School },
     { name: 'الدورات التدريبية', href: '/admin/courses', icon: BookOpen },

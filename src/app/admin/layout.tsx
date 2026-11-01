@@ -150,7 +150,7 @@ export default async function AdminLayout({
             <h2 style={{ fontSize: '1.25rem', fontWeight: '800', margin: 0, color: '#1B2B5E' }}>لوحة التحكم والسيطرة العامة</h2>
             {pendingTeachersCount > 0 && (
               <Link 
-                href="/admin/teachers/pending"
+                href="/admin/teachers"
                 className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-amber-100 text-amber-800 border border-amber-200 hover:bg-amber-200 transition-colors"
               >
                 ⏳ {pendingTeachersCount} طلب اعتماد جديد
