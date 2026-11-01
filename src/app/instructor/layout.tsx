@@ -1,8 +1,9 @@
 import Link from 'next/link';
-import { LayoutDashboard, Users, BookOpen, PlayCircle, Settings, DollarSign, LogOut, Bell, Award } from 'lucide-react';
+import { LogOut, Bell } from 'lucide-react';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import prisma from '@/lib/prisma';
+import { InstructorSidebarNav } from '@/components/InstructorSidebarNav';
 import '../index.css';
 
 export default async function InstructorLayout({
@@ -25,29 +26,24 @@ export default async function InstructorLayout({
     redirect('/login');
   }
 
-  const navItems = [
-    { name: 'اللوحة الرئيسية', href: '/instructor', icon: LayoutDashboard },
-    { name: 'إدارة الدورات', href: '/instructor/courses', icon: BookOpen },
-    { name: 'الطلاب', href: '/instructor/students', icon: Users },
-    { name: 'المحاضرات المباشرة', href: '/instructor/lectures', icon: PlayCircle },
-    { name: 'الكويزات', href: '/instructor/quizzes', icon: Award },
-    { name: 'الأرباح', href: '/instructor/revenue', icon: DollarSign },
-    { name: 'الإعدادات', href: '/instructor/settings', icon: Settings },
-  ];
-
   return (
     <div style={{ display: 'flex', minHeight: '100vh', background: '#F8FAFC' }} dir="rtl">
       
-      {/* SaaS Sidebar - Deep Navy Theme */}
+      {/* SaaS Sidebar - Deep Navy Theme & Sticky */}
       <aside 
         style={{ 
           width: '280px', 
+          height: '100vh',
+          position: 'sticky',
+          top: 0,
+          flexShrink: 0,
           background: 'linear-gradient(180deg, #1B2B5E 0%, #0F172A 100%)', 
           borderLeft: '1px solid rgba(255, 255, 255, 0.08)', 
           boxShadow: '-4px 0 24px rgba(15, 23, 42, 0.12)',
           display: 'flex', 
           flexDirection: 'column',
           zIndex: 40,
+          overflowY: 'auto',
         }}
       >
         
@@ -74,29 +70,8 @@ export default async function InstructorLayout({
           </div>
         </div>
 
-        {/* Navigation */}
-        <nav style={{ padding: '0.5rem 1rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.4rem', overflowY: 'auto' }}>
-          {navItems.map((item) => (
-            <Link 
-              key={item.name} 
-              href={item.href} 
-              className="instructor-nav-item" 
-              style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                gap: '0.85rem', 
-                padding: '0.8rem 1rem', 
-                borderRadius: '12px',
-                fontWeight: '700',
-                fontSize: '0.92rem',
-                textDecoration: 'none',
-              }}
-            >
-              <item.icon size={19} color="#38BDF8" style={{ flexShrink: 0 }} />
-              <span>{item.name}</span>
-            </Link>
-          ))}
-        </nav>
+        {/* Dynamic Interactive Navigation with Active State Highlighting */}
+        <InstructorSidebarNav />
 
         {/* Bottom Actions */}
         <div style={{ padding: '1.25rem 1rem', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
@@ -123,13 +98,40 @@ export default async function InstructorLayout({
       </aside>
 
       {/* Main Content Area */}
-      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', background: '#F8FAFC' }}>
+      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, background: '#F8FAFC' }}>
         
-        {/* Top Header */}
-        <header style={{ height: '72px', background: '#FFFFFF', borderBottom: '1px solid #E2E8F0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 2rem', boxShadow: '0 1px 3px rgba(0,0,0,0.02)' }}>
+        {/* Top Header - Pure White & Sticky */}
+        <header 
+          style={{ 
+            height: '72px', 
+            background: '#FFFFFF', 
+            borderBottom: '1px solid #E2E8F0', 
+            boxShadow: '0 2px 10px rgba(0, 0, 0, 0.02)',
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'space-between', 
+            padding: '0 2rem',
+            position: 'sticky',
+            top: 0,
+            zIndex: 30,
+          }}
+        >
           <h2 style={{ fontSize: '1.25rem', fontWeight: '800', margin: 0, color: '#1B2B5E' }}>لوحة المعلم والمحاضر</h2>
           <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-            <Link href="/instructor/courses/new" className="btn btn-primary" style={{ padding: '0.55rem 1.25rem', fontSize: '0.88rem', borderRadius: '12px', background: '#F97316', borderColor: '#F97316', color: '#FFFFFF', fontWeight: '700', boxShadow: '0 4px 12px rgba(249,115,22,0.25)' }}>
+            <Link 
+              href="/instructor/courses/new" 
+              className="btn btn-primary" 
+              style={{ 
+                padding: '0.55rem 1.25rem', 
+                fontSize: '0.88rem', 
+                borderRadius: '12px', 
+                background: '#F97316', 
+                borderColor: '#F97316', 
+                color: '#FFFFFF', 
+                fontWeight: '700', 
+                boxShadow: '0 4px 12px rgba(249,115,22,0.25)' 
+              }}
+            >
               + إنشاء دورة جديدة
             </Link>
             <div style={{ width: '1px', height: '24px', background: '#E2E8F0' }}></div>

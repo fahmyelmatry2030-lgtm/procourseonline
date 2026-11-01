@@ -1,8 +1,9 @@
 import Link from 'next/link';
-import { BookOpen, User, ShieldCheck, LogOut, LayoutDashboard, Settings, Bell, School, Calendar, ClipboardCheck } from 'lucide-react';
+import { LogOut, Settings, Bell } from 'lucide-react';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import prisma from '@/lib/prisma';
+import { StudentSidebarNav } from '@/components/StudentSidebarNav';
 import '../index.css';
 
 export default async function StudentLayout({
@@ -25,29 +26,24 @@ export default async function StudentLayout({
     redirect('/login');
   }
 
-  const navItems = [
-    { name: 'لوحة التحكم', href: '/student', icon: LayoutDashboard },
-    { name: 'صفي الدراسي', href: '/student/classes', icon: School },
-    { name: 'جدول الحصص والمواعيد', href: '/student/schedule', icon: Calendar },
-    { name: 'الامتحانات والواجبات', href: '/student/assignments', icon: ClipboardCheck },
-    { name: 'دوراتي التدريبية', href: '/student/courses', icon: BookOpen },
-    { name: 'الشهادات المعتمدة', href: '/student/certificates', icon: ShieldCheck },
-    { name: 'الملف الشخصي', href: '/student/profile', icon: User },
-  ];
-
   return (
     <div style={{ display: 'flex', minHeight: '100vh', background: '#F8FAFC' }} dir="rtl">
       
-      {/* SaaS Sidebar - Deep Navy Theme */}
+      {/* SaaS Sidebar - Deep Navy Theme & Sticky */}
       <aside 
         style={{ 
           width: '280px', 
+          height: '100vh',
+          position: 'sticky',
+          top: 0,
+          flexShrink: 0,
           background: 'linear-gradient(180deg, #1B2B5E 0%, #0F172A 100%)', 
           borderLeft: '1px solid rgba(255, 255, 255, 0.08)', 
           boxShadow: '-4px 0 24px rgba(15, 23, 42, 0.08)',
           display: 'flex', 
           flexDirection: 'column',
           zIndex: 40,
+          overflowY: 'auto',
         }}
       >
         
@@ -71,29 +67,8 @@ export default async function StudentLayout({
           </div>
         </div>
 
-        {/* Navigation */}
-        <nav style={{ padding: '0.5rem 1rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-          {navItems.map((item) => (
-            <Link 
-              key={item.name} 
-              href={item.href} 
-              className="student-nav-item"
-              style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                gap: '0.85rem', 
-                padding: '0.8rem 1rem', 
-                borderRadius: '12px',
-                fontWeight: '700',
-                fontSize: '0.92rem',
-                textDecoration: 'none',
-              }}
-            >
-              <item.icon size={19} color="#38BDF8" style={{ flexShrink: 0 }} />
-              <span>{item.name}</span>
-            </Link>
-          ))}
-        </nav>
+        {/* Dynamic Interactive Navigation with Active State Highlighting */}
+        <StudentSidebarNav />
 
         {/* Bottom Actions */}
         <div style={{ padding: '1.25rem 1rem', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
@@ -122,7 +97,7 @@ export default async function StudentLayout({
       {/* Main Content Area */}
       <main style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
         
-        {/* Top Header - Pure White */}
+        {/* Top Header - Pure White & Sticky */}
         <header 
           style={{ 
             height: '72px', 
