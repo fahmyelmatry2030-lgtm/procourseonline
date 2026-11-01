@@ -1,7 +1,7 @@
 import prisma from '@/lib/prisma';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
-import { BookOpen, Users, DollarSign, Star, MoreVertical, Plus } from 'lucide-react';
+import { BookOpen, Users, Video, Star, MoreVertical, Plus } from 'lucide-react';
 
 export default async function InstructorDashboard() {
   const cookieStore = await cookies();
@@ -9,11 +9,11 @@ export default async function InstructorDashboard() {
 
   const myCourses = await prisma.course.findMany({
     where: { instructorId: userId },
-    include: { enrollments: true, reviews: true }
+    include: { enrollments: true, reviews: true, lectures: true }
   });
 
   const totalStudents = myCourses.reduce((acc, course) => acc + course.enrollments.length, 0);
-  const totalRevenue = myCourses.reduce((acc, course) => acc + (course.enrollments.length * course.price), 0);
+  const totalLectures = myCourses.reduce((acc, course) => acc + course.lectures.length, 0);
   
   let averageRating = 0;
   let totalReviews = 0;
@@ -36,18 +36,18 @@ export default async function InstructorDashboard() {
             <Users size={28} />
           </div>
           <div>
-            <div style={{ color: 'var(--muted-foreground)', fontSize: '0.9rem', fontWeight: '600', marginBottom: '0.25rem' }}>إجمالي الطلاب</div>
+            <div style={{ color: 'var(--muted-foreground)', fontSize: '0.9rem', fontWeight: '600', marginBottom: '0.25rem' }}>إجمالي الطلاب المتدربين</div>
             <div style={{ fontSize: '1.75rem', fontWeight: '800', color: 'var(--foreground)' }}>{totalStudents}</div>
           </div>
         </div>
 
         <div className="saas-card" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-          <div style={{ width: '56px', height: '56px', borderRadius: '14px', background: 'rgba(16, 185, 129, 0.1)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <DollarSign size={28} />
+          <div style={{ width: '56px', height: '56px', borderRadius: '14px', background: 'rgba(16, 185, 129, 0.1)', color: '#10B981', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Video size={28} />
           </div>
           <div>
-            <div style={{ color: 'var(--muted-foreground)', fontSize: '0.9rem', fontWeight: '600', marginBottom: '0.25rem' }}>الأرباح (USD)</div>
-            <div style={{ fontSize: '1.75rem', fontWeight: '800', color: 'var(--foreground)' }}>${totalRevenue.toLocaleString()}</div>
+            <div style={{ color: 'var(--muted-foreground)', fontSize: '0.9rem', fontWeight: '600', marginBottom: '0.25rem' }}>إجمالي المحاضرات والدروس</div>
+            <div style={{ fontSize: '1.75rem', fontWeight: '800', color: 'var(--foreground)' }}>{totalLectures}</div>
           </div>
         </div>
 
@@ -56,7 +56,7 @@ export default async function InstructorDashboard() {
             <BookOpen size={28} />
           </div>
           <div>
-            <div style={{ color: 'var(--muted-foreground)', fontSize: '0.9rem', fontWeight: '600', marginBottom: '0.25rem' }}>الدورات المنشورة</div>
+            <div style={{ color: 'var(--muted-foreground)', fontSize: '0.9rem', fontWeight: '600', marginBottom: '0.25rem' }}>الدورات التدريبية</div>
             <div style={{ fontSize: '1.75rem', fontWeight: '800', color: 'var(--foreground)' }}>{myCourses.length}</div>
           </div>
         </div>
@@ -66,7 +66,7 @@ export default async function InstructorDashboard() {
             <Star size={28} fill="currentColor" />
           </div>
           <div>
-            <div style={{ color: 'var(--muted-foreground)', fontSize: '0.9rem', fontWeight: '600', marginBottom: '0.25rem' }}>متوسط التقييم</div>
+            <div style={{ color: 'var(--muted-foreground)', fontSize: '0.9rem', fontWeight: '600', marginBottom: '0.25rem' }}>تقييم المتدربين</div>
             <div style={{ fontSize: '1.75rem', fontWeight: '800', color: 'var(--foreground)' }}>{averageRating > 0 ? averageRating.toFixed(1) : 'جديد'}</div>
           </div>
         </div>

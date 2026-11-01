@@ -27,7 +27,9 @@ export default function LoginPage() {
       } else {
         if (res?.role === 'ADMIN') {
           window.location.href = '/admin';
-        } else if (res?.role === 'INSTRUCTOR' || res?.role === 'TEACHER') {
+        } else if (res?.role === 'TEACHER') {
+          window.location.href = '/teacher';
+        } else if (res?.role === 'INSTRUCTOR') {
           window.location.href = '/instructor';
         } else {
           window.location.href = '/student';

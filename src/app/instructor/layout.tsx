@@ -145,16 +145,31 @@ export default async function InstructorLayout({
         </div>
 
         {/* User Profile Summary */}
-        <div style={{ margin: '1.25rem 1rem', padding: '1rem', background: 'rgba(255, 255, 255, 0.06)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '14px', display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
-          <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: 'linear-gradient(135deg, #F97316 0%, #EA580C 100%)', color: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '800', fontSize: '1.15rem', boxShadow: '0 4px 14px rgba(249, 115, 22, 0.4)', flexShrink: 0 }}>
+        <div style={{ margin: '1.25rem 1rem 0.75rem 1rem', padding: '0.85rem 1rem', background: 'rgba(255, 255, 255, 0.06)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '14px', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'linear-gradient(135deg, #F97316 0%, #EA580C 100%)', color: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '800', fontSize: '1.1rem', boxShadow: '0 4px 14px rgba(249, 115, 22, 0.4)', flexShrink: 0 }}>
             {(user.name || 'م').charAt(0)}
           </div>
           <div style={{ overflow: 'hidden' }}>
-            <div style={{ fontWeight: '800', fontSize: '0.92rem', color: '#FFFFFF', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+            <div style={{ fontWeight: '800', fontSize: '0.88rem', color: '#FFFFFF', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
               {user.name || 'محاضر'}
             </div>
-            <div style={{ fontSize: '0.78rem', color: '#94A3B8' }}>{user.subjectSpecialty || user.phone}</div>
+            <div style={{ fontSize: '0.75rem', color: '#94A3B8' }}>{user.subjectSpecialty || 'مدرب كورسات'}</div>
           </div>
+        </div>
+
+        {/* Workspace Switcher */}
+        <div style={{ padding: '0 1rem 0.75rem 1rem' }}>
+          <Link
+            href="/teacher"
+            className="flex items-center justify-between p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 text-xs font-bold border border-white/10 transition-colors"
+            title="الانتقال إلى لوحة المناهج والصفوف المدرسية"
+          >
+            <span className="flex items-center gap-1.5">
+              <span className="text-sky-400">🏫</span>
+              <span>لوحة المناهج والصفوف</span>
+            </span>
+            <span className="text-[10px] bg-sky-500/20 text-sky-300 px-1.5 py-0.5 rounded-md">تبديل</span>
+          </Link>
         </div>
 
         {/* Dynamic Interactive Navigation with Active State Highlighting */}

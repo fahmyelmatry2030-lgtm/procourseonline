@@ -13,10 +13,9 @@ interface NavItem {
 const navItems: NavItem[] = [
   { name: 'اللوحة الرئيسية', href: '/instructor', icon: LayoutDashboard },
   { name: 'إدارة الدورات', href: '/instructor/courses', icon: BookOpen },
-  { name: 'الطلاب', href: '/instructor/students', icon: Users },
-  { name: 'المحاضرات المباشرة', href: '/instructor/lectures', icon: PlayCircle },
-  { name: 'الكويزات', href: '/instructor/quizzes', icon: Award },
-  { name: 'الأرباح', href: '/instructor/revenue', icon: DollarSign },
+  { name: 'الطلاب والمتدربون', href: '/instructor/students', icon: Users },
+  { name: 'المحاضرات والجلسات', href: '/instructor/lectures', icon: PlayCircle },
+  { name: 'الكويزات والتقييمات', href: '/instructor/quizzes', icon: Award },
   { name: 'الإعدادات', href: '/instructor/settings', icon: Settings },
 ];
 
