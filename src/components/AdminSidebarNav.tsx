@@ -12,7 +12,8 @@ import {
   CreditCard,
   ShieldAlert,
   User,
-  Settings
+  Settings,
+  Ticket
 } from 'lucide-react';
 
 interface AdminNavProps {
@@ -36,6 +37,7 @@ export function AdminSidebarNav({ pendingTeachersCount }: AdminNavProps) {
     { name: 'الصفوف والمواد المدرسية', href: '/admin/classes', icon: School },
     { name: 'الدورات التدريبية', href: '/admin/courses', icon: BookOpen },
     { name: 'حسابات المنصة والمالية', href: '/admin/payments', icon: CreditCard },
+    { name: 'كوبونات الخصم', href: '/admin/coupons', icon: Ticket },
     { name: 'الملف الشخصي للإدارة', href: '/admin/profile', icon: User },
     { name: 'إعدادات المنصة', href: '/admin/settings', icon: Settings },
   ];
