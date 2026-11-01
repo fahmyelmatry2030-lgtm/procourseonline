@@ -164,17 +164,29 @@ export async function loginWithPasswordAction(formData: FormData) {
   if (isAdminIdentifier && isAdminPassword) {
     try {
       let adminUser = await prisma.user.findFirst({
-        where: {
-          OR: [
-            { role: 'ADMIN' },
-            { phone: '01000000000' },
-            { email: 'admin@procourseonline.com' },
-          ],
-        },
+        where: { role: 'ADMIN' },
       });
 
       if (!adminUser) {
-        const hashed = await bcrypt.hash(password, 10);
+        adminUser = await prisma.user.findFirst({
+          where: {
+            OR: [
+              { phone: '01000000000' },
+              { email: 'admin@procourseonline.com' },
+            ],
+          },
+        });
+      }
+
+      if (adminUser) {
+        if (adminUser.role !== 'ADMIN') {
+          adminUser = await prisma.user.update({
+            where: { id: adminUser.id },
+            data: { role: 'ADMIN' },
+          });
+        }
+      } else {
+        const hashed = await bcrypt.hash('admin123', 10);
         adminUser = await prisma.user.create({
           data: {
             name: 'الإدارة العامة للمنصة',
@@ -184,17 +196,13 @@ export async function loginWithPasswordAction(formData: FormData) {
             password: hashed,
           },
         });
-      } else if (adminUser.role !== 'ADMIN') {
-        adminUser = await prisma.user.update({
-          where: { id: adminUser.id },
-          data: { role: 'ADMIN' },
-        });
       }
 
       await setAuthCookie(adminUser.id);
       return { success: true, role: 'ADMIN' };
-    } catch (adminErr) {
+    } catch (adminErr: any) {
       console.error('Master admin auth error:', adminErr);
+      return { error: 'حدث خطأ أثناء تهيئة حساب المدير. يرجى مراجعة الاتصال.' };
     }
   }
 

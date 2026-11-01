@@ -3,10 +3,11 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { LogIn, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
+import { LogIn, ArrowRight, ShieldCheck, Sparkles, Eye, EyeOff } from 'lucide-react';
 import { loginWithPasswordAction } from '@/actions/auth';
 
 export default function LoginPage() {
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -16,16 +17,26 @@ export default function LoginPage() {
     setLoading(true);
     setError('');
 
-    const formData = new FormData(e.currentTarget);
-    const res = await loginWithPasswordAction(formData);
+    try {
+      const formData = new FormData(e.currentTarget);
+      const res = await loginWithPasswordAction(formData);
 
-    if (res.error) {
-      setError(res.error);
+      if (res?.error) {
+        setError(res.error);
+        setLoading(false);
+      } else {
+        if (res?.role === 'ADMIN') {
+          window.location.href = '/admin';
+        } else if (res?.role === 'INSTRUCTOR' || res?.role === 'TEACHER') {
+          window.location.href = '/instructor';
+        } else {
+          window.location.href = '/student';
+        }
+      }
+    } catch (err: any) {
+      console.error('Login submit error:', err);
+      setError('حدث خطأ أثناء الاتصال بالسيرفر. يرجى المحاولة مرة أخرى.');
       setLoading(false);
-    } else {
-      if (res.role === 'INSTRUCTOR' || res.role === 'TEACHER') router.push('/instructor');
-      else if (res.role === 'ADMIN') router.push('/admin');
-      else router.push('/student');
     }
   };
 
@@ -45,7 +56,7 @@ export default function LoginPage() {
             <p className="text-slate-500 font-medium">قم بتسجيل الدخول لمتابعة رحلتك التعليمية</p>
           </div>
 
-          <div className="friendly-card p-8 border border-slate-100">
+          <div className="friendly-card p-8 border border-slate-100 shadow-sm bg-white rounded-3xl">
             {error && (
               <div className="mb-6 bg-red-50 text-red-600 p-4 rounded-2xl text-sm font-bold border border-red-100 flex items-center gap-2 animate-fade-in">
                 <div className="w-2 h-2 rounded-full bg-red-500 shrink-0"></div>
@@ -60,7 +71,7 @@ export default function LoginPage() {
                   <input 
                     type="text" 
                     name="phone"
-                    placeholder="أدخل بريدك أو رقم هاتفك"
+                    placeholder="أدخل بريدك أو رقم هاتفك أو admin"
                     className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-medium text-slate-700 focus:border-[#0EA5E9] focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-100 transition-all"
                     required 
                   />
@@ -72,25 +83,35 @@ export default function LoginPage() {
                   <label className="block text-sm font-bold text-slate-700">كلمة المرور</label>
                   <Link href="#" className="text-sm font-bold text-[#0EA5E9] hover:underline">نسيت الكلمة؟</Link>
                 </div>
-                <input 
-                  type="password" 
-                  name="password"
-                  placeholder="••••••••"
-                  className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-medium text-slate-700 focus:border-[#0EA5E9] focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-100 transition-all"
-                  required 
-                  dir="ltr"
-                />
+                <div className="relative">
+                  <input 
+                    type={showPassword ? "text" : "password"} 
+                    name="password"
+                    placeholder="••••••••"
+                    className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3.5 pl-12 text-sm font-medium text-slate-700 focus:border-[#0EA5E9] focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-100 transition-all"
+                    required 
+                    dir="ltr"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(prev => !prev)}
+                    className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors p-1"
+                    title={showPassword ? "إخفاء كلمة المرور" : "إظهار كلمة المرور"}
+                  >
+                    {showPassword ? <EyeOff size={19} /> : <Eye size={19} />}
+                  </button>
+                </div>
               </div>
 
               <button 
                 type="submit" 
                 disabled={loading}
-                className="btn btn-primary w-full rounded-2xl py-4 flex items-center justify-center gap-2 text-base shadow-lg shadow-sky-500/20"
+                className="btn btn-primary w-full rounded-2xl py-4 flex items-center justify-center gap-2 text-base font-bold shadow-lg shadow-sky-500/20 cursor-pointer"
               >
                 {loading ? (
                   <span className="flex items-center gap-2">
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                    جاري الدخول...
+                    جاري التحقق والدخول...
                   </span>
                 ) : (
                   <>
@@ -111,34 +132,24 @@ export default function LoginPage() {
       </div>
 
       {/* Left Side - Graphic */}
-      <div className="hidden lg:block relative flex-1 bg-gradient-to-br from-[#0EA5E9] to-[#1B2B5E] overflow-hidden rounded-r-[3rem] shadow-2xl my-4 mr-4">
+      <div className="hidden lg:block relative flex-1 bg-gradient-to-br from-[#1B2B5E] via-[#0F172A] to-[#0EA5E9] overflow-hidden rounded-r-[3rem] shadow-2xl my-4 mr-4">
         {/* Background Patterns */}
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_2px_2px,white_1px,transparent_0)] bg-[length:32px_32px]"></div>
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-white/20 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-sky-400/30 rounded-full blur-3xl"></div>
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-[#0EA5E9]/30 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl"></div>
 
         <div className="absolute inset-0 flex flex-col justify-center items-center text-white p-12 text-center">
-          <div className="w-24 h-24 bg-white/10 backdrop-blur-md rounded-3xl flex items-center justify-center mb-8 border border-white/20 shadow-xl relative">
-            <div className="absolute -top-3 -right-3 w-8 h-8 bg-amber-400 rounded-full flex items-center justify-center animate-bounce">
-              <Sparkles size={16} className="text-white" />
+          <div className="w-20 h-20 bg-white/10 backdrop-blur-md rounded-3xl flex items-center justify-center mb-8 border border-white/20 shadow-xl relative">
+            <div className="absolute -top-2 -right-2 w-6 h-6 bg-emerald-400 rounded-full flex items-center justify-center animate-pulse">
+              <Sparkles size={12} className="text-white fill-white" />
             </div>
-            <ShieldCheck size={48} className="text-white" />
+            <ShieldCheck size={40} className="text-[#0EA5E9]" />
           </div>
           
-          <h2 className="text-4xl lg:text-5xl font-black mb-6 leading-tight">استثمر في مستقبلك <br/><span className="text-sky-200">التعليمي والمهني اليوم!</span></h2>
-          <p className="text-lg lg:text-xl text-white/80 font-medium max-w-lg leading-relaxed">
-            انضم لآلاف الطلاب والخبراء الذين يشاركون المعرفة ويبنون مستقبلاً مشرقاً من خلال منصة ProCourse Online التعليمية الرائدة.
+          <h2 className="text-4xl lg:text-5xl font-black mb-6 leading-tight">منصة تعليمية متكاملة <br/><span className="text-sky-300">للمستقبل</span></h2>
+          <p className="text-lg text-white/80 font-medium max-w-md leading-relaxed">
+            متابعة شاملة للمناهج الدراسية، حصص تفاعلية مباشرة، واختبارات دورية مع أفضل المعلمين المعتمدين.
           </p>
-
-          <div className="mt-12 flex flex-col items-center gap-4">
-            <div className="flex -space-x-4 space-x-reverse">
-              <div className="w-12 h-12 rounded-full border-2 border-[#1B2B5E] bg-emerald-400 z-30"></div>
-              <div className="w-12 h-12 rounded-full border-2 border-[#1B2B5E] bg-amber-400 z-20"></div>
-              <div className="w-12 h-12 rounded-full border-2 border-[#1B2B5E] bg-sky-400 z-10"></div>
-              <div className="w-12 h-12 rounded-full border-2 border-[#1B2B5E] bg-pink-400 flex items-center justify-center font-bold text-sm">+10k</div>
-            </div>
-            <span className="text-white/80 font-bold text-sm">متدرب نشط على ProCourse Online</span>
-          </div>
         </div>
       </div>
 
