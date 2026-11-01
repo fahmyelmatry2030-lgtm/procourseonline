@@ -1,34 +1,174 @@
-import { Settings, Users, Shield, PieChart, BookOpen, CreditCard } from 'lucide-react';
 import Link from 'next/link';
+import { LogOut, Bell, Shield, Settings } from 'lucide-react';
+import { redirect } from 'next/navigation';
+import { cookies } from 'next/headers';
+import prisma from '@/lib/prisma';
+import { AdminSidebarNav } from '@/components/AdminSidebarNav';
+import '../index.css';
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  const sidebarLinks = [
-    { name: 'لوحة التحكم', href: '/admin', icon: PieChart },
-    { name: 'إدارة المستخدمين', href: '/admin/users', icon: Users },
-    { name: 'الدورات', href: '/admin/courses', icon: BookOpen },
-    { name: 'المدفوعات', href: '/admin/payments', icon: CreditCard },
-    { name: 'الصلاحيات', href: '/admin/roles', icon: Shield },
-    { name: 'الإعدادات', href: '/admin/settings', icon: Settings },
-  ];
+export default async function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const cookieStore = await cookies();
+  const userId = cookieStore.get('userId')?.value;
+
+  if (!userId) {
+    redirect('/login');
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+  });
+
+  if (!user || user.role !== 'ADMIN') {
+    redirect('/login');
+  }
+
+  // Count pending unverified teachers
+  const pendingTeachersCount = await prisma.user.count({
+    where: {
+      role: { in: ['TEACHER', 'INSTRUCTOR'] },
+      isVerifiedTeacher: false,
+    },
+  });
 
   return (
-    <div className="container" style={{ display: 'flex', gap: '2rem', minHeight: '80vh', padding: '2rem 0' }}>
-      <aside className="glass-panel" style={{ width: '250px', padding: '2rem 1rem', display: 'flex', flexDirection: 'column', gap: '1rem', height: 'fit-content', borderLeft: '4px solid var(--danger)' }}>
-        <h2 style={{ padding: '0 1rem', fontSize: '1.2rem', color: 'var(--text-muted)', marginBottom: '1rem' }}>إدارة النظام العليا</h2>
-        {sidebarLinks.map((link) => {
-          const Icon = link.icon;
-          return (
-            <Link key={link.href} href={link.href} className="btn btn-outline" style={{ display: 'flex', justifyContent: 'flex-start', gap: '1rem', padding: '1rem', border: 'none', background: 'rgba(255,255,255,0.02)' }}>
-              <Icon size={20} />
-              {link.name}
-            </Link>
-          );
-        })}
+    <div style={{ display: 'flex', minHeight: '100vh', background: '#F8FAFC' }} dir="rtl">
+      
+      {/* SaaS Sidebar - Deep Navy Theme & Sticky */}
+      <aside 
+        style={{ 
+          width: '280px', 
+          height: '100vh',
+          position: 'sticky',
+          top: 0,
+          flexShrink: 0,
+          background: 'linear-gradient(180deg, #1B2B5E 0%, #0F172A 100%)', 
+          borderLeft: '1px solid rgba(255, 255, 255, 0.08)', 
+          boxShadow: '-4px 0 24px rgba(15, 23, 42, 0.12)',
+          display: 'flex', 
+          flexDirection: 'column',
+          zIndex: 40,
+          overflowY: 'auto',
+        }}
+      >
+        
+        {/* Brand */}
+        <div style={{ padding: '1.75rem 1.5rem', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
+          <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', background: '#FFFFFF', padding: '0.45rem 1rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.15)', textDecoration: 'none' }}>
+            <img src="/logo.jpg" alt="ProCourse Online" style={{ height: '36px', width: 'auto', objectFit: 'contain' }} />
+          </Link>
+          <div style={{ marginTop: '0.65rem', display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.25rem 0.65rem', borderRadius: '8px', background: 'rgba(239, 68, 68, 0.18)', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#F87171', fontSize: '0.72rem', fontWeight: '800' }}>
+            🛡️ لوحة الإدارة العليا
+          </div>
+        </div>
+
+        {/* Admin Profile Summary */}
+        <div style={{ margin: '1.25rem 1rem', padding: '1rem', background: 'rgba(255, 255, 255, 0.06)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '14px', display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+          <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: 'linear-gradient(135deg, #EF4444 0%, #B91C1C 100%)', color: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '800', fontSize: '1.15rem', boxShadow: '0 4px 14px rgba(239, 68, 68, 0.4)', flexShrink: 0 }}>
+            <Shield size={22} />
+          </div>
+          <div style={{ overflow: 'hidden' }}>
+            <div style={{ fontWeight: '800', fontSize: '0.92rem', color: '#FFFFFF', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+              {user.name || 'مدير المنصة'}
+            </div>
+            <div style={{ fontSize: '0.78rem', color: '#94A3B8' }}>{user.phone}</div>
+          </div>
+        </div>
+
+        {/* Navigation */}
+        <AdminSidebarNav pendingTeachersCount={pendingTeachersCount} />
+
+        {/* Bottom Actions */}
+        <div style={{ padding: '1.25rem 1rem', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
+          <Link 
+            href="/logout" 
+            style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '0.75rem', 
+              color: '#F87171', 
+              padding: '0.75rem 1rem', 
+              borderRadius: '12px',
+              textDecoration: 'none',
+              fontWeight: '700',
+              fontSize: '0.9rem',
+              transition: 'background 0.2s',
+            }}
+            className="hover:bg-red-500/10"
+          >
+            <LogOut size={18} />
+            تسجيل الخروج
+          </Link>
+        </div>
       </aside>
 
-      <main style={{ flex: 1 }}>
-        {children}
+      {/* Main Content Area */}
+      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, background: '#F8FAFC' }}>
+        
+        {/* Top Header - Pure White & Sticky */}
+        <header 
+          style={{ 
+            height: '72px', 
+            background: '#FFFFFF', 
+            borderBottom: '1px solid #E2E8F0', 
+            boxShadow: '0 2px 10px rgba(0, 0, 0, 0.02)',
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'space-between', 
+            padding: '0 2rem',
+            position: 'sticky',
+            top: 0,
+            zIndex: 30,
+          }}
+        >
+          <div className="flex items-center gap-3">
+            <h2 style={{ fontSize: '1.25rem', fontWeight: '800', margin: 0, color: '#1B2B5E' }}>لوحة التحكم والسيطرة العامة</h2>
+            {pendingTeachersCount > 0 && (
+              <Link 
+                href="/admin/teachers/pending"
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-amber-100 text-amber-800 border border-amber-200 hover:bg-amber-200 transition-colors"
+              >
+                ⏳ {pendingTeachersCount} طلب اعتماد جديد
+              </Link>
+            )}
+          </div>
+
+          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+            <Link 
+              href="/admin/classes/new" 
+              className="btn btn-primary" 
+              style={{ 
+                padding: '0.55rem 1.25rem', 
+                fontSize: '0.88rem', 
+                borderRadius: '12px', 
+                background: '#0EA5E9', 
+                borderColor: '#0EA5E9', 
+                color: '#FFFFFF', 
+                fontWeight: '700', 
+                boxShadow: '0 4px 12px rgba(14,165,233,0.25)' 
+              }}
+            >
+              + إضافة صف أو مادة
+            </Link>
+            <div style={{ width: '1px', height: '24px', background: '#E2E8F0' }}></div>
+            <button style={{ width: '40px', height: '40px', borderRadius: '12px', border: '1px solid #E2E8F0', background: '#F8FAFC', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', position: 'relative' }}>
+              <Bell size={18} color="#64748B" />
+              {pendingTeachersCount > 0 && (
+                <span style={{ position: 'absolute', top: '9px', right: '10px', width: '8px', height: '8px', background: '#EF4444', borderRadius: '50%' }}></span>
+              )}
+            </button>
+          </div>
+        </header>
+
+        {/* Content */}
+        <div style={{ padding: '2rem', flex: 1, overflowY: 'auto' }}>
+          {children}
+        </div>
       </main>
+
     </div>
   );
 }
